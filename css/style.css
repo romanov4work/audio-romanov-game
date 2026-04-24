@@ -1,0 +1,510 @@
+/* Основные стили игры */
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Экраны */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.screen.active {
+    display: flex;
+    opacity: 1;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Экран загрузки */
+#loading-screen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-content {
+    text-align: center;
+    color: var(--text-light);
+}
+
+.loading-content h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: 32px;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--text-light);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 24px;
+}
+
+/* Главное меню */
+#menu-screen {
+    background: linear-gradient(135deg, #E8F4F8 0%, #D4E8F0 100%);
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-container {
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+}
+
+.game-title {
+    font-size: var(--font-size-3xl);
+    color: var(--primary-color);
+    margin-bottom: 32px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.character-container {
+    margin: 32px 0;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.character {
+    width: 150px;
+    height: 150px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: var(--shadow-lg);
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.menu-buttons .btn {
+    width: 100%;
+}
+
+/* Выбор уровня */
+#level-select-screen {
+    background: var(--bg-game);
+    padding: 32px;
+    overflow-y: auto;
+}
+
+.level-select-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.level-select-container h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.level-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+.level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.level-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.level-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.level-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.level-description {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.level-stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+/* Игровой экран */
+#game-screen {
+    background: var(--bg-game);
+    flex-direction: column;
+}
+
+.game-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    background: var(--bg-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.progress-bar {
+    flex: 1;
+    height: 12px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--warning-color));
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.score {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.game-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    overflow-y: auto;
+}
+
+.character-animation {
+    width: 120px;
+    height: 120px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    margin-bottom: 24px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.task-container {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+#task-title {
+    font-size: var(--font-size-xl);
+    color: var(--primary-color);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.task-content {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+    text-align: center;
+    line-height: 1.6;
+}
+
+.task-text {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 24px 0;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+}
+
+.task-emotion {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--warning-color);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    margin-top: 16px;
+}
+
+/* Запись */
+.record-container {
+    text-align: center;
+    margin: 24px 0;
+}
+
+.btn-record {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: var(--font-size-sm);
+    transition: all 0.3s ease;
+}
+
+.btn-record:hover {
+    transform: scale(1.05);
+}
+
+.btn-record:active {
+    transform: scale(0.95);
+}
+
+.btn-record.recording {
+    background: var(--danger-color);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.record-icon {
+    font-size: 48px;
+}
+
+.recording-indicator {
+    display: none;
+    margin-top: 16px;
+    color: var(--danger-color);
+    font-weight: 600;
+    align-items: center;
+    gap: 8px;
+}
+
+.recording-indicator.active {
+    display: flex;
+    justify-content: center;
+}
+
+.pulse {
+    width: 12px;
+    height: 12px;
+    background: var(--danger-color);
+    border-radius: 50%;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* Результат */
+.result-container {
+    display: none;
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.result-container.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.result-message {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.result-message.success {
+    color: var(--success-color);
+}
+
+.result-message.error {
+    color: var(--danger-color);
+}
+
+.result-details {
+    font-size: var(--font-size-md);
+    color: var(--text-secondary);
+}
+
+.game-footer {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 24px;
+    background: var(--bg-primary);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Экран результатов */
+#results-screen {
+    background: linear-gradient(135deg, #95E1D3 0%, #4ECDC4 100%);
+    align-items: center;
+    justify-content: center;
+}
+
+.results-container {
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: 48px 32px;
+    box-shadow: var(--shadow-lg);
+}
+
+.results-container h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+
+.results-character {
+    width: 150px;
+    height: 150px;
+    background: var(--success-color);
+    border-radius: 50%;
+    margin: 0 auto 32px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.results-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 32px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-icon {
+    font-size: 48px;
+}
+
+.stat-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.results-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.results-buttons .btn {
+    width: 100%;
+}
+
+/* Туториал */
+.tutorial-steps {
+    margin: 32px 0;
+}
+
+.tutorial-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: var(--text-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    flex-shrink: 0;
+}
+
+.tutorial-step p {
+    font-size: var(--font-size-md);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .levels-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .task-container {
+        padding: 24px 16px;
+    }
+
+    .task-text {
+        font-size: var(--font-size-lg);
+    }
+
+    .results-stats {
+        flex-direction: column;
+        gap: 24px;
+    }
+}

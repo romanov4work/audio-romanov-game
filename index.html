@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Озвучиваем Мультики - Учи.ру</title>
+    <link rel="stylesheet" href="css/ui-kit.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Экран загрузки -->
+        <div id="loading-screen" class="screen active">
+            <div class="loading-content">
+                <h1>Озвучиваем Мультики 🎬</h1>
+                <div class="loading-spinner"></div>
+                <p>Загрузка...</p>
+            </div>
+        </div>
+
+        <!-- Главное меню -->
+        <div id="menu-screen" class="screen">
+            <div class="menu-container">
+                <h1 class="game-title">Озвучиваем Мультики</h1>
+                <div class="character-container">
+                    <div id="main-character" class="character"></div>
+                </div>
+
+                <div class="menu-buttons">
+                    <button class="btn btn-primary btn-large" id="start-game">
+                        Начать игру
+                    </button>
+                    <button class="btn btn-secondary" id="how-to-play">
+                        Как играть?
+                    </button>
+                    <button class="btn btn-secondary" id="settings">
+                        Настройки
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран выбора уровня -->
+        <div id="level-select-screen" class="screen">
+            <div class="level-select-container">
+                <h2>Выбери задание</h2>
+                <div class="levels-grid" id="levels-grid">
+                    <!-- Уровни будут добавлены через JS -->
+                </div>
+                <button class="btn btn-back" id="back-to-menu">Назад</button>
+            </div>
+        </div>
+
+        <!-- Игровой экран -->
+        <div id="game-screen" class="screen">
+            <div class="game-container">
+                <!-- Верхняя панель -->
+                <div class="game-header">
+                    <button class="btn btn-icon" id="pause-game">⏸</button>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="score" id="score">⭐ 0</div>
+                </div>
+
+                <!-- Игровая область -->
+                <div class="game-area">
+                    <div class="character-animation" id="game-character"></div>
+
+                    <div class="task-container">
+                        <h3 id="task-title">Задание</h3>
+                        <div class="task-content" id="task-content">
+                            <!-- Контент задания -->
+                        </div>
+                    </div>
+
+                    <!-- Кнопка записи -->
+                    <div class="record-container">
+                        <button class="btn btn-record" id="record-btn">
+                            <span class="record-icon">🎤</span>
+                            <span class="record-text">Нажми и говори</span>
+                        </button>
+                        <div class="recording-indicator" id="recording-indicator">
+                            <span class="pulse"></span>
+                            Слушаю...
+                        </div>
+                    </div>
+
+                    <!-- Результат -->
+                    <div class="result-container" id="result-container">
+                        <div class="result-message" id="result-message"></div>
+                        <div class="result-details" id="result-details"></div>
+                    </div>
+                </div>
+
+                <!-- Нижняя панель -->
+                <div class="game-footer">
+                    <button class="btn btn-secondary" id="skip-task">Пропустить</button>
+                    <button class="btn btn-primary" id="next-task" style="display:none;">Дальше</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран результатов -->
+        <div id="results-screen" class="screen">
+            <div class="results-container">
+                <h2>Отличная работа!</h2>
+                <div class="results-character" id="results-character"></div>
+
+                <div class="results-stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">⭐</span>
+                        <span class="stat-value" id="final-score">0</span>
+                        <span class="stat-label">Звёзд</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">✅</span>
+                        <span class="stat-value" id="tasks-completed">0</span>
+                        <span class="stat-label">Заданий</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🎯</span>
+                        <span class="stat-value" id="accuracy">0%</span>
+                        <span class="stat-label">Точность</span>
+                    </div>
+                </div>
+
+                <div class="results-buttons">
+                    <button class="btn btn-primary btn-large" id="play-again">Играть ещё</button>
+                    <button class="btn btn-secondary" id="back-to-menu-results">В меню</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно "Как играть" -->
+        <div id="tutorial-modal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close" id="close-tutorial">×</button>
+                <h2>Как играть?</h2>
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <span class="step-number">1</span>
+                        <p>Выбери задание: скороговорки, сложные слова или озвучку мультика</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <span class="step-number">2</span>
+                        <p>Нажми на кнопку с микрофоном и чётко произнеси текст</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <span class="step-number">3</span>
+                        <p>Старайся говорить с правильной эмоцией и интонацией</p>
+                    </div>
+                    <div class="tutorial-step">
+                        <span class="step-number">4</span>
+                        <p>Получай звёзды за хорошее произношение!</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="start-from-tutorial">Понятно, начать!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/levels.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
