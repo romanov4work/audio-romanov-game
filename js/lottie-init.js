@@ -12,51 +12,60 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('[LOTTIE] DOM загружен, запускаем инициализацию');
 
     const initAnimation = () => {
-        const container = document.getElementById('menu-character-animation');
+        // Массив котов для инициализации
+        const cats = [
+            { id: 'menu-character-animation', path: 'assets/character-animation.json', name: 'Кот 1 (idle)' },
+            { id: 'menu-character-animation-2', path: 'assets/cat-uchi-real.json', name: 'Кот 2 (real)' },
+            { id: 'menu-character-animation-3', path: 'assets/cat-home.json', name: 'Кот 3 (home)' }
+        ];
 
-        if (!container) {
-            console.error('[LOTTIE] ❌ Контейнер #menu-character-animation не найден!');
-            return;
-        }
+        cats.forEach(cat => {
+            const container = document.getElementById(cat.id);
 
-        console.log('[LOTTIE] ✅ Контейнер найден:', container);
+            if (!container) {
+                console.warn(`[LOTTIE] ⚠️ Контейнер ${cat.id} не найден`);
+                return;
+            }
 
-        if (typeof lottie === 'undefined') {
-            console.error('[LOTTIE] ❌ Библиотека Lottie не загружена!');
-            return;
-        }
+            console.log(`[LOTTIE] ✅ Контейнер ${cat.id} найден`);
 
-        console.log('[LOTTIE] Загружаем анимацию из assets/character-animation.json');
+            if (typeof lottie === 'undefined') {
+                console.error('[LOTTIE] ❌ Библиотека Lottie не загружена!');
+                return;
+            }
 
-        try {
-            const catAnimation = lottie.loadAnimation({
-                container: container,
-                renderer: 'svg',
-                loop: true,
-                autoplay: true,
-                path: 'assets/character-animation.json?v=' + Date.now()
-            });
+            console.log(`[LOTTIE] Загружаем ${cat.name} из ${cat.path}`);
 
-            catAnimation.addEventListener('DOMLoaded', () => {
-                console.log('[LOTTIE] ✅✅✅ КОТ ЗАГРУЖЕН И ОТОБРАЖАЕТСЯ!');
-            });
+            try {
+                const catAnimation = lottie.loadAnimation({
+                    container: container,
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: cat.path + '?v=' + Date.now()
+                });
 
-            catAnimation.addEventListener('data_ready', () => {
-                console.log('[LOTTIE] ✅ Данные анимации готовы');
-            });
+                catAnimation.addEventListener('DOMLoaded', () => {
+                    console.log(`[LOTTIE] ✅✅✅ ${cat.name} ЗАГРУЖЕН И ОТОБРАЖАЕТСЯ!`);
+                });
 
-            catAnimation.addEventListener('data_failed', (error) => {
-                console.error('[LOTTIE] ❌ Ошибка загрузки данных:', error);
-            });
+                catAnimation.addEventListener('data_ready', () => {
+                    console.log(`[LOTTIE] ✅ Данные ${cat.name} готовы`);
+                });
 
-            catAnimation.addEventListener('error', (error) => {
-                console.error('[LOTTIE] ❌ Общая ошибка:', error);
-            });
+                catAnimation.addEventListener('data_failed', (error) => {
+                    console.error(`[LOTTIE] ❌ Ошибка загрузки ${cat.name}:`, error);
+                });
 
-            console.log('[LOTTIE] Объект анимации создан:', catAnimation);
-        } catch (error) {
-            console.error('[LOTTIE] ❌ Исключение при создании анимации:', error);
-        }
+                catAnimation.addEventListener('error', (error) => {
+                    console.error(`[LOTTIE] ❌ Общая ошибка ${cat.name}:`, error);
+                });
+
+                console.log(`[LOTTIE] Объект анимации ${cat.name} создан`);
+            } catch (error) {
+                console.error(`[LOTTIE] ❌ Исключение при создании ${cat.name}:`, error);
+            }
+        });
     };
 
     // Даём время на загрузку Lottie библиотеки
