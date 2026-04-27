@@ -47,25 +47,16 @@
 
         <!-- Главное меню -->
         <div id="menu-screen" class="screen">
-            <!-- Заголовок игры -->
-            <h1 class="game-title">Озвучиваем Мультики</h1>
-
-            <!-- Верхняя панель: Уровень и Статистика -->
-            <div class="top-info-bar">
-                <!-- Индикатор уровня игрока -->
-                <div class="player-level-indicator" id="player-level-indicator">
-                    <div class="level-badge" id="level-badge">1</div>
-                    <div class="level-info">
-                        <div class="level-text">Уровень</div>
-                        <div class="xp-bar">
-                            <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
-                        </div>
-                        <div class="xp-text" id="xp-text">0 / 100 XP</div>
+            <!-- Индикатор уровня игрока -->
+            <div class="player-level-indicator" id="player-level-indicator">
+                <div class="level-badge" id="level-badge">1</div>
+                <div class="level-info">
+                    <div class="level-text">Уровень</div>
+                    <div class="xp-bar">
+                        <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
                     </div>
+                    <div class="xp-text" id="xp-text">0 / 100 XP</div>
                 </div>
-
-                <!-- Кнопка статистики -->
-                <button class="parent-zone-btn-top" id="parent-zone-btn-top">📊 Статистика</button>
             </div>
 
             <!-- Верхняя панель с кнопками -->
@@ -218,64 +209,6 @@
                 <div class="results-buttons">
                     <button class="btn btn-primary btn-large" id="play-again">Играть ещё</button>
                     <button class="btn btn-secondary" id="back-to-menu-results">В меню</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Кнопка "Статистика" -->
-        <button class="parent-zone-btn" id="parent-zone-btn">📊 Статистика</button>
-
-        <!-- Модальное окно родительской статистики -->
-        <div class="parent-dashboard-modal" id="parent-dashboard-modal">
-            <div class="dashboard-content">
-                <div class="dashboard-header">
-                    <h2 class="dashboard-title">📊 Статистика ребёнка</h2>
-                    <button class="dashboard-close" id="dashboard-close">×</button>
-                </div>
-
-                <div class="stats-overview" id="stats-overview">
-                    <!-- Заполняется через JS -->
-                </div>
-
-                <div class="modules-section">
-                    <h3 class="section-title">Прогресс по модулям</h3>
-                    <div class="modules-grid" id="modules-stats">
-                        <!-- Заполняется через JS -->
-                    </div>
-                </div>
-
-                <div class="strengths-weaknesses">
-                    <div class="strength-card">
-                        <div class="card-header">
-                            <span class="card-icon">💪</span>
-                            <h3 class="card-title">Сильные стороны</h3>
-                        </div>
-                        <div class="strength-list" id="strengths-list">
-                            <!-- Заполняется через JS -->
-                        </div>
-                    </div>
-
-                    <div class="weakness-card">
-                        <div class="card-header">
-                            <span class="card-icon">📈</span>
-                            <h3 class="card-title">Над чем работать</h3>
-                        </div>
-                        <div class="weakness-list" id="weaknesses-list">
-                            <!-- Заполняется через JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="recommendations-section">
-                    <h3 class="section-title">Рекомендации</h3>
-                    <div id="recommendations-list">
-                        <!-- Заполняется через JS -->
-                    </div>
-                </div>
-
-                <div class="export-buttons">
-                    <button class="export-btn print" id="export-print">🖨️ Печать</button>
-                    <button class="export-btn csv" id="export-csv">📊 Скачать CSV</button>
                 </div>
             </div>
         </div>
