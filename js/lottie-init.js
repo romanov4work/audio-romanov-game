@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 renderer: 'svg',
                 loop: true,
                 autoplay: true,
-                path: 'assets/character-animation.json'
+                path: 'assets/character-animation.json?v=' + Date.now()
             });
 
             catAnimation.addEventListener('DOMLoaded', () => {
