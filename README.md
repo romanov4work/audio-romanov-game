@@ -34,32 +34,32 @@
 
 ## 🚀 Быстрый старт
 
-### Вариант 1: Без установки (Web Speech API)
+### Вариант 1: Простой запуск (Web Speech API)
 ```bash
-# Просто откройте index.html в браузере Chrome/Edge
-start index.html
+# Просто откройте в Brave Browser
+open-in-brave.bat
 ```
 
-### Вариант 2: С локальным сервером
-```bash
-# Python
-python -m http.server 8000
+### Вариант 2: С Whisper (лучшее качество) - РЕКОМЕНДУЕТСЯ
 
-# Затем откройте http://localhost:8000
+**Шаг 1: Установка Whisper (один раз)**
+```bash
+install-whisper.bat
 ```
 
-### Вариант 3: С Whisper (лучшее качество распознавания)
+**Шаг 2: Запуск игры**
 ```bash
-# 1. Установите зависимости
-pip install -r requirements.txt
+# Автоматически запустит Whisper сервер и игру
+start-game.bat
+```
 
-# 2. Запустите Whisper сервер
-python whisper_server.py
+**Или вручную:**
+```bash
+# Терминал 1: Запустить Whisper сервер
+start-whisper-server.bat
 
-# 3. В другом терминале запустите веб-сервер
-python -m http.server 8000
-
-# 4. Откройте http://localhost:8000
+# Терминал 2: Запустить игру
+start-game.bat
 ```
 
 ## 📁 Структура проекта
