@@ -767,10 +767,7 @@ class App {
     // Обновить состояние модулей (заблокированные/разблокированные)
     updateModulesState() {
         const modules = [
-            { id: 'combined-tongue-twisters', element: 'tongue-twisters', name: 'Скороговорки и слова' },
-            { id: 'combined-voicing', element: 'voicing', name: 'Озвучка и дыхание' },
-            { id: 'speed-reading', element: 'speed-reading', name: 'Скорочтение' },
-            { id: 'sound-improvement', element: 'sound-improvement', name: 'Как улучшить звуки' }
+            { id: 'combined-tongue-twisters', element: 'tongue-twisters', name: 'Скороговорки и слова' }
         ];
 
         modules.forEach((module, index) => {
