@@ -13,7 +13,6 @@ class App {
         this.progressSystem = new ProgressSystem();
         this.rewardSystem = new RewardSystem();
         this.parentDashboard = new ParentDashboard();
-        this.certificateSystem = new CertificateSystem();
         this.init();
     }
 
@@ -642,18 +641,6 @@ class App {
                 setTimeout(() => {
                     this.voiceManager.saySpecial('achievement');
                 }, 2000);
-            }
-
-            // Проверить сертификаты
-            const newCertificates = this.certificateSystem.checkCertificateEligibility();
-            if (newCertificates.length > 0) {
-                newCertificates.forEach((cert, index) => {
-                    this.certificateSystem.awardCertificate(cert);
-                    setTimeout(() => {
-                        this.certificateSystem.showCertificateModal(cert);
-                        this.soundManager.playAchievement();
-                    }, 3000 + (index * 2000));
-                });
             }
 
             // Сохранить сессию для родительской статистики
