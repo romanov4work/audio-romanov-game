@@ -71,23 +71,29 @@ class App {
             console.log('[App.init] Показываем главное меню');
             this.showScreen('menu');
 
-        // Обновить индикатор уровня
-        this.updateLevelIndicator();
+            // Обновить индикатор уровня
+            this.updateLevelIndicator();
 
-        // Обновить состояние модулей (заблокированные/разблокированные)
-        this.updateModulesState();
+            // Обновить состояние модулей (заблокированные/разблокированные)
+            this.updateModulesState();
 
-        // Приветствие персонажа
-        setTimeout(() => {
-            this.voiceManager.sayWelcome();
-        }, 500);
-
-        // Показать туториал при первом запуске
-        if (this.tutorialSystem.shouldShowTutorial()) {
+            // Приветствие персонажа
             setTimeout(() => {
-                this.voiceManager.saySpecial('tutorial_start');
-                this.tutorialSystem.startTutorial();
-            }, 3000);
+                this.voiceManager.sayWelcome();
+            }, 500);
+
+            // Показать туториал при первом запуске
+            if (this.tutorialSystem.shouldShowTutorial()) {
+                setTimeout(() => {
+                    this.voiceManager.saySpecial('tutorial_start');
+                    this.tutorialSystem.startTutorial();
+                }, 3000);
+            }
+
+            console.log('[App.init] Инициализация завершена');
+        } catch (error) {
+            console.error('[App.init] Ошибка инициализации:', error);
+            alert('Ошибка инициализации: ' + error.message);
         }
     }
 
