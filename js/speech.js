@@ -9,8 +9,7 @@ class SpeechRecognizer {
 
         // Инициализация клиентов распознавания
         this.whisperClient = new WhisperClient();
-        this.webSpeechClient = new WebSpeechClient();
-        this.useWebSpeech = false; // По умолчанию пытаемся использовать Whisper
+        this.useWebSpeech = false; // ВСЕГДА используем только Whisper
     }
 
     // Проверка поддержки браузером
@@ -69,33 +68,20 @@ class SpeechRecognizer {
         });
     }
 
-    // Распознать речь через Whisper API или Web Speech API
+    // Распознать речь через Whisper API
     async recognizeSpeech(audioBlob) {
         console.log('[SpeechRecognizer.recognizeSpeech] Начало, размер blob:', audioBlob.size);
         try {
-            // Попробовать Whisper
-            if (!this.useWebSpeech && this.whisperClient.isAvailable) {
-                console.log('[SpeechRecognizer.recognizeSpeech] Пробуем Whisper');
-                try {
-                    const result = await this.whisperClient.transcribe(audioBlob);
-                    console.log('[SpeechRecognizer.recognizeSpeech] Whisper результат:', result);
-                    return result;
-                } catch (error) {
-                    console.warn('[SpeechRecognizer.recognizeSpeech] Whisper недоступен:', error);
-                    this.useWebSpeech = true;
-                }
-            }
-
-            // Fallback на Web Speech API
-            if (this.webSpeechClient.isAvailable) {
-                console.log('[SpeechRecognizer.recognizeSpeech] Используем Web Speech API');
-                const result = await this.webSpeechClient.transcribe();
-                console.log('[SpeechRecognizer.recognizeSpeech] Web Speech результат:', result);
+            // Используем только Whisper
+            if (this.whisperClient.isAvailable) {
+                console.log('[SpeechRecognizer.recognizeSpeech] Используем Whisper');
+                const result = await this.whisperClient.transcribe(audioBlob);
+                console.log('[SpeechRecognizer.recognizeSpeech] Whisper результат:', result);
                 return result;
             }
 
-            // Если ничего не работает, используем mock
-            console.warn('[SpeechRecognizer.recognizeSpeech] Все API недоступны, используется mock');
+            // Если Whisper недоступен, используем mock
+            console.warn('[SpeechRecognizer.recognizeSpeech] Whisper недоступен, используется mock');
             return await this.mockRecognition(audioBlob);
         } catch (error) {
             console.error('[SpeechRecognizer.recognizeSpeech] Ошибка:', error);

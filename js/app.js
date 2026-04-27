@@ -413,21 +413,52 @@ class App {
             this.soundManager.playRecordStop();
 
             recordBtn.classList.remove('recording');
-            recordBtn.querySelector('.record-text').textContent = 'Проверяю...';
+            recordBtn.querySelector('.record-text').textContent = 'Обрабатываем...';
             recordingIndicator.classList.remove('active');
             visualizer.style.display = 'none';
+
+            // Показать индикатор обработки
+            this.showProcessingIndicator();
 
             try {
                 console.log('[handleRecordButton] Вызываем stopRecordingAndCheck');
                 const result = await this.game.stopRecordingAndCheck();
                 console.log('[handleRecordButton] Результат распознавания:', result);
+
+                // Показать расшифровку
+                this.updateProcessingTranscription(result.recognized);
+
+                // Подождать немного, чтобы пользователь увидел расшифровку
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Скрыть индикатор обработки
+                this.hideProcessingIndicator();
+
                 this.showTaskResult(result);
             } catch (error) {
                 console.error('[handleRecordButton] Ошибка проверки:', error);
+                this.hideProcessingIndicator();
                 alert('Ошибка проверки: ' + error.message);
                 recordBtn.querySelector('.record-text').textContent = 'Нажми и говори';
             }
         }
+    }
+
+    showProcessingIndicator() {
+        const indicator = document.getElementById('processing-indicator');
+        const transcription = document.getElementById('processing-transcription');
+        transcription.textContent = '';
+        indicator.style.display = 'block';
+    }
+
+    hideProcessingIndicator() {
+        const indicator = document.getElementById('processing-indicator');
+        indicator.style.display = 'none';
+    }
+
+    updateProcessingTranscription(text) {
+        const transcription = document.getElementById('processing-transcription');
+        transcription.textContent = `Вы сказали: "${text}"`;
     }
 
     showTaskResult(result) {
