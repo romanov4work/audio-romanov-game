@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/enhanced-visuals.css">
     <link rel="stylesheet" href="css/tutorial.css">
+    <link rel="stylesheet" href="css/character.css">
     <style>
         /* Критические стили для быстрой загрузки */
         body { margin: 0; overflow: hidden; }
@@ -103,9 +104,36 @@
                 <!-- Игровая область -->
                 <div class="game-area">
                     <div class="character-animation" id="game-character">
-                        <svg viewBox="0 0 100 100">
-                            <use href="#character-robot"></use>
-                        </svg>
+                        <div class="cat-character">
+                            <div class="cat-head">
+                                <div class="cat-ear left">
+                                    <div class="cat-ear-inner"></div>
+                                </div>
+                                <div class="cat-ear right">
+                                    <div class="cat-ear-inner"></div>
+                                </div>
+                                <div class="cat-face">
+                                    <div class="cat-eyes">
+                                        <div class="cat-eye"></div>
+                                        <div class="cat-eye"></div>
+                                    </div>
+                                    <div class="cat-nose"></div>
+                                    <div class="cat-mouth"></div>
+                                    <div class="cat-whiskers">
+                                        <div class="cat-whisker"></div>
+                                        <div class="cat-whisker"></div>
+                                        <div class="cat-whisker"></div>
+                                        <div class="cat-whisker"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cat-body"></div>
+                            <div class="cat-paws">
+                                <div class="cat-paw"></div>
+                                <div class="cat-paw"></div>
+                            </div>
+                            <div class="cat-tail"></div>
+                        </div>
                     </div>
 
                     <!-- Комбо индикатор -->
@@ -171,10 +199,37 @@
         <div id="results-screen" class="screen">
             <div class="results-container">
                 <h2>Отличная работа!</h2>
-                <div class="results-character" id="results-character">
-                    <svg viewBox="0 0 100 100">
-                        <use href="#character-robot"></use>
-                    </svg>
+                <div class="character-animation" id="results-character">
+                    <div class="cat-character happy">
+                        <div class="cat-head">
+                            <div class="cat-ear left">
+                                <div class="cat-ear-inner"></div>
+                            </div>
+                            <div class="cat-ear right">
+                                <div class="cat-ear-inner"></div>
+                            </div>
+                            <div class="cat-face">
+                                <div class="cat-eyes">
+                                    <div class="cat-eye"></div>
+                                    <div class="cat-eye"></div>
+                                </div>
+                                <div class="cat-nose"></div>
+                                <div class="cat-mouth"></div>
+                                <div class="cat-whiskers">
+                                    <div class="cat-whisker"></div>
+                                    <div class="cat-whisker"></div>
+                                    <div class="cat-whisker"></div>
+                                    <div class="cat-whisker"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cat-body"></div>
+                        <div class="cat-paws">
+                            <div class="cat-paw"></div>
+                            <div class="cat-paw"></div>
+                        </div>
+                        <div class="cat-tail"></div>
+                    </div>
                 </div>
 
                 <div class="results-stats">

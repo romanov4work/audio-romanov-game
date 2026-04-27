@@ -1,0 +1,463 @@
+/* Анимированный персонаж-кот */
+
+.character-animation {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Тело кота */
+.cat-character {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Голова */
+.cat-head {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #FFB84D 0%, #FF9A3D 100%);
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 20px rgba(255, 154, 61, 0.3);
+}
+
+/* Уши */
+.cat-ear {
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(135deg, #FFB84D 0%, #FF9A3D 100%);
+    border-radius: 50% 50% 0 0;
+    position: absolute;
+    top: -15px;
+}
+
+.cat-ear.left {
+    left: 10px;
+    transform: rotate(-20deg);
+}
+
+.cat-ear.right {
+    right: 10px;
+    transform: rotate(20deg);
+}
+
+.cat-ear-inner {
+    width: 20px;
+    height: 30px;
+    background: #FFD699;
+    border-radius: 50% 50% 0 0;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Лицо */
+.cat-face {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+}
+
+/* Глаза */
+.cat-eyes {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cat-eye {
+    width: 20px;
+    height: 20px;
+    background: #333;
+    border-radius: 50%;
+    position: relative;
+    animation: blink 4s ease-in-out infinite;
+}
+
+.cat-eye::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+/* Нос */
+.cat-nose {
+    width: 12px;
+    height: 10px;
+    background: #FF6B9D;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Рот */
+.cat-mouth {
+    position: absolute;
+    top: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2px;
+}
+
+.cat-mouth::before,
+.cat-mouth::after {
+    content: '';
+    width: 15px;
+    height: 10px;
+    border: 2px solid #333;
+    border-top: none;
+    border-radius: 0 0 50% 50%;
+}
+
+.cat-mouth::before {
+    border-right: none;
+}
+
+.cat-mouth::after {
+    border-left: none;
+}
+
+/* Усы */
+.cat-whiskers {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 2px;
+}
+
+.cat-whisker {
+    width: 35px;
+    height: 2px;
+    background: #333;
+    position: absolute;
+    top: 0;
+}
+
+.cat-whisker:nth-child(1) {
+    left: 0;
+    transform: rotate(-10deg);
+}
+
+.cat-whisker:nth-child(2) {
+    left: 0;
+    top: 8px;
+    transform: rotate(10deg);
+}
+
+.cat-whisker:nth-child(3) {
+    right: 0;
+    transform: rotate(10deg);
+}
+
+.cat-whisker:nth-child(4) {
+    right: 0;
+    top: 8px;
+    transform: rotate(-10deg);
+}
+
+/* Тело */
+.cat-body {
+    width: 100px;
+    height: 80px;
+    background: linear-gradient(135deg, #FFB84D 0%, #FF9A3D 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 20px rgba(255, 154, 61, 0.3);
+}
+
+/* Лапки */
+.cat-paws {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.cat-paw {
+    width: 25px;
+    height: 30px;
+    background: linear-gradient(135deg, #FFB84D 0%, #FF9A3D 100%);
+    border-radius: 50% 50% 40% 40%;
+}
+
+/* Хвост */
+.cat-tail {
+    width: 60px;
+    height: 60px;
+    border: 15px solid #FFB84D;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 30px;
+    right: -20px;
+    border-left: none;
+    border-top: none;
+    transform: rotate(-45deg);
+    animation: tailWag 2s ease-in-out infinite;
+}
+
+/* ЭМОЦИИ */
+
+/* Радость */
+.cat-character.happy .cat-eye {
+    animation: happyBlink 0.5s ease-in-out;
+}
+
+.cat-character.happy .cat-mouth::before,
+.cat-character.happy .cat-mouth::after {
+    border-radius: 0 0 80% 80%;
+    animation: smile 0.5s ease-in-out;
+}
+
+.cat-character.happy {
+    animation: bounce 0.6s ease-in-out;
+}
+
+/* Грусть */
+.cat-character.sad .cat-eye {
+    height: 15px;
+    margin-top: 5px;
+}
+
+.cat-character.sad .cat-mouth::before,
+.cat-character.sad .cat-mouth::after {
+    border-radius: 80% 80% 0 0;
+    border-top: 2px solid #333;
+    border-bottom: none;
+}
+
+.cat-character.sad .cat-ear.left {
+    transform: rotate(-40deg);
+}
+
+.cat-character.sad .cat-ear.right {
+    transform: rotate(40deg);
+}
+
+/* Говорит */
+.cat-character.talking .cat-mouth {
+    animation: talk 0.3s ease-in-out infinite;
+}
+
+.cat-character.talking .cat-head {
+    animation: headBob 0.6s ease-in-out infinite;
+}
+
+/* Удивление */
+.cat-character.surprised .cat-eye {
+    width: 25px;
+    height: 25px;
+    animation: eyeWiden 0.3s ease-in-out;
+}
+
+.cat-character.surprised .cat-mouth {
+    animation: mouthOpen 0.3s ease-in-out;
+}
+
+/* Думает */
+.cat-character.thinking .cat-head {
+    animation: tilt 1s ease-in-out infinite;
+}
+
+.cat-character.thinking .cat-eye {
+    animation: lookAround 2s ease-in-out infinite;
+}
+
+/* Успех */
+.cat-character.success {
+    animation: jump 0.6s ease-in-out;
+}
+
+.cat-character.success .cat-eye {
+    animation: starEyes 0.6s ease-in-out;
+}
+
+/* АНИМАЦИИ */
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes blink {
+    0%, 90%, 100% {
+        height: 20px;
+    }
+    95% {
+        height: 2px;
+    }
+}
+
+@keyframes tailWag {
+    0%, 100% {
+        transform: rotate(-45deg);
+    }
+    50% {
+        transform: rotate(-25deg);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-30px) scale(1.1);
+    }
+}
+
+@keyframes talk {
+    0%, 100% {
+        transform: translateX(-50%) scaleY(1);
+    }
+    50% {
+        transform: translateX(-50%) scaleY(1.3);
+    }
+}
+
+@keyframes headBob {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+@keyframes smile {
+    0% {
+        border-radius: 0 0 50% 50%;
+    }
+    100% {
+        border-radius: 0 0 80% 80%;
+    }
+}
+
+@keyframes tilt {
+    0%, 100% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    50% {
+        transform: translateX(-50%) rotate(10deg);
+    }
+}
+
+@keyframes lookAround {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-3px);
+    }
+    75% {
+        transform: translateX(3px);
+    }
+}
+
+@keyframes jump {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    30% {
+        transform: translateY(-40px) scale(1.1);
+    }
+    50% {
+        transform: translateY(-50px) scale(1.15) rotate(5deg);
+    }
+    70% {
+        transform: translateY(-40px) scale(1.1) rotate(-5deg);
+    }
+}
+
+@keyframes starEyes {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.3) rotate(180deg);
+    }
+}
+
+@keyframes eyeWiden {
+    0% {
+        width: 20px;
+        height: 20px;
+    }
+    100% {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@keyframes mouthOpen {
+    0% {
+        transform: translateX(-50%) scaleY(1);
+    }
+    100% {
+        transform: translateX(-50%) scaleY(1.5);
+    }
+}
+
+@keyframes happyBlink {
+    0%, 100% {
+        height: 20px;
+    }
+    50% {
+        height: 5px;
+        border-radius: 50% 50% 80% 80%;
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .character-animation {
+        width: 150px;
+        height: 150px;
+    }
+
+    .cat-head {
+        width: 90px;
+        height: 90px;
+    }
+
+    .cat-body {
+        width: 75px;
+        height: 60px;
+    }
+}

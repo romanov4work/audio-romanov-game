@@ -344,9 +344,12 @@ class App {
                 recordingIndicator.classList.add('active');
                 visualizer.style.display = 'block';
 
-                // Анимация персонажа
+                // Анимация персонажа - говорит
                 const gameCharacter = document.getElementById('game-character');
-                gameCharacter.classList.add('talking');
+                const catCharacter = gameCharacter.querySelector('.cat-character');
+                if (catCharacter) {
+                    catCharacter.classList.add('talking');
+                }
             }
         } else {
             // Остановить запись и проверить
@@ -356,14 +359,24 @@ class App {
             visualizer.style.display = 'none';
 
             const gameCharacter = document.getElementById('game-character');
-            gameCharacter.classList.remove('talking');
+            const catCharacter = gameCharacter.querySelector('.cat-character');
+            if (catCharacter) {
+                catCharacter.classList.remove('talking');
+                catCharacter.classList.add('thinking');
+            }
 
             try {
                 const result = await this.game.stopRecordingAndCheck();
+                if (catCharacter) {
+                    catCharacter.classList.remove('thinking');
+                }
                 this.showTaskResult(result);
             } catch (error) {
                 alert('Ошибка проверки. Попробуй ещё раз!');
                 recordBtn.querySelector('.record-text').textContent = 'Нажми и говори';
+                if (catCharacter) {
+                    catCharacter.classList.remove('thinking');
+                }
             }
         }
     }
@@ -377,17 +390,22 @@ class App {
         const resultDetails = document.getElementById('result-details');
         const resultBonus = document.getElementById('result-bonus');
 
+        const gameCharacter = document.getElementById('game-character');
+        const catCharacter = gameCharacter.querySelector('.cat-character');
+
         if (result.isSuccess) {
             this.soundManager.playSuccess();
+
+            // Анимация персонажа - радость
+            if (catCharacter) {
+                catCharacter.classList.add('happy');
+                setTimeout(() => catCharacter.classList.remove('happy'), 1000);
+            }
 
             // Озвучить похвалу
             setTimeout(() => {
                 this.voiceManager.sayPraise();
             }, 500);
-
-            const gameCharacter = document.getElementById('game-character');
-            gameCharacter.classList.add('success');
-            setTimeout(() => gameCharacter.classList.remove('success'), 600);
 
             resultMessage.className = 'result-message success';
             const stars = '⭐'.repeat(result.stars);
@@ -441,10 +459,21 @@ class App {
             }
 
             if (result.stars === 3) {
+                // Анимация успеха
+                if (catCharacter) {
+                    catCharacter.classList.add('success');
+                    setTimeout(() => catCharacter.classList.remove('success'), 1000);
+                }
                 this.confettiManager.create(window.innerWidth / 2, window.innerHeight / 2, 20);
             }
         } else {
             this.soundManager.playError();
+
+            // Анимация персонажа - грусть
+            if (catCharacter) {
+                catCharacter.classList.add('sad');
+                setTimeout(() => catCharacter.classList.remove('sad'), 2000);
+            }
 
             // Озвучить подбадривание
             setTimeout(() => {
