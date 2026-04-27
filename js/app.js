@@ -104,12 +104,6 @@ class App {
     }
 
     initEventListeners() {
-        // Главное меню - режим тренировки
-        document.getElementById('demo-mode').addEventListener('click', () => {
-            this.soundManager.playClick();
-            this.startDemoMode();
-        });
-
         // Главное меню - объединённые модули
         document.getElementById('tongue-twisters').addEventListener('click', () => {
             this.soundManager.playClick();

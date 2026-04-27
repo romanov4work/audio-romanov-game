@@ -10,7 +10,7 @@ class ProgressSystem {
         return this.storage.load('progress', {
             playerLevel: 1,
             totalXP: 0,
-            unlockedModules: ['demo-mode', 'combined-tongue-twisters', 'combined-voicing', 'speed-reading', 'sound-improvement'], // Временно все открыты
+            unlockedModules: ['combined-tongue-twisters', 'combined-voicing', 'speed-reading', 'sound-improvement'], // Все открыты
             moduleProgress: {
                 'combined-tongue-twisters': { unlocked: true, stars: 0, bestAccuracy: 0, completed: false },
                 'combined-voicing': { unlocked: true, stars: 0, bestAccuracy: 0, completed: false },
@@ -91,7 +91,6 @@ class ProgressSystem {
 
     // Проверить, разблокирован ли модуль
     isModuleUnlocked(moduleId) {
-        if (moduleId === 'demo-mode') return true;
         return this.progress.moduleProgress[moduleId]?.unlocked || false;
     }
 
