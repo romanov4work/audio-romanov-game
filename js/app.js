@@ -123,6 +123,11 @@ class App {
             this.toggleFullscreen();
         });
 
+        // Кнопка "Назад" в игре
+        document.getElementById('back-to-menu-game').addEventListener('click', () => {
+            this.exitToMenu();
+        });
+
         // Выбор уровня
         document.getElementById('back-to-menu').addEventListener('click', () => {
             this.showScreen('menu');
