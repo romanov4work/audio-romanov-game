@@ -63,9 +63,9 @@ class App {
                 alert('Ваш браузер не поддерживает запись звука. Попробуйте Chrome или Firefox.');
             }
 
-            // Загрузить голоса
-            console.log('[App.init] Загрузка голосов');
-            await this.voiceManager.loadVoices();
+            // Загрузить голоса (отключено из-за ошибок на мобильных)
+            // console.log('[App.init] Загрузка голосов');
+            // await this.voiceManager.loadVoices();
 
             // Показать главное меню
             console.log('[App.init] Показываем главное меню');
@@ -77,10 +77,10 @@ class App {
             // Обновить состояние модулей (заблокированные/разблокированные)
             this.updateModulesState();
 
-            // Приветствие персонажа
-            setTimeout(() => {
-                this.voiceManager.sayWelcome();
-            }, 500);
+            // Приветствие персонажа (отключено)
+            // setTimeout(() => {
+            //     this.voiceManager.sayWelcome();
+            // }, 500);
 
             // Показать туториал при первом запуске
             if (this.tutorialSystem.shouldShowTutorial()) {
@@ -349,19 +349,20 @@ class App {
         if (task.emotion) {
             contentHTML += `<div class="task-emotion">Эмоция: ${task.emotion}</div>`;
         }
-        if (task.instruction) {
-            contentHTML += `<div class="hint">${task.instruction}</div>`;
-        } else {
-            const hint = getTaskHint(task.type);
-            contentHTML += `<div class="hint">${hint}</div>`;
-        }
+        // Убрали hint чтобы не отвлекал от текста скороговорки
+        // if (task.instruction) {
+        //     contentHTML += `<div class="hint">${task.instruction}</div>`;
+        // } else {
+        //     const hint = getTaskHint(task.type);
+        //     contentHTML += `<div class="hint">${hint}</div>`;
+        // }
 
         taskContent.innerHTML = contentHTML;
 
-        // Озвучить инструкцию к заданию
-        setTimeout(() => {
-            this.voiceManager.sayInstruction(task.type);
-        }, 500);
+        // Озвучить инструкцию к заданию (отключено)
+        // setTimeout(() => {
+        //     this.voiceManager.sayInstruction(task.type);
+        // }, 500);
     }
 
     startTaskTimer() {
@@ -473,10 +474,10 @@ class App {
         if (result.isSuccess) {
             this.soundManager.playSuccess();
 
-            // Озвучить похвалу
-            setTimeout(() => {
-                this.voiceManager.sayPraise();
-            }, 500);
+            // Озвучить похвалу (отключено)
+            // setTimeout(() => {
+            //     this.voiceManager.sayPraise();
+            // }, 500);
 
             resultMessage.className = 'result-message success';
             const stars = '⭐'.repeat(result.stars);
@@ -503,20 +504,20 @@ class App {
             if (result.comboInfo && result.comboInfo.combo === 2) {
                 setTimeout(() => {
                     this.tutorialSystem.showInGameHint('combo-started');
-                    this.voiceManager.saySpecial('combo_start');
+                    // this.voiceManager.saySpecial('combo_start');
                 }, 1500);
             }
 
-            // Озвучить комбо
-            if (result.comboInfo && result.comboInfo.combo === 2) {
-                setTimeout(() => {
-                    this.voiceManager.saySpecial('combo_2x');
-                }, 2000);
-            } else if (result.comboInfo && result.comboInfo.combo >= 3) {
-                setTimeout(() => {
-                    this.voiceManager.saySpecial('combo_3x');
-                }, 2000);
-            }
+            // Озвучить комбо (отключено)
+            // if (result.comboInfo && result.comboInfo.combo === 2) {
+            //     setTimeout(() => {
+            //         this.voiceManager.saySpecial('combo_2x');
+            //     }, 2000);
+            // } else if (result.comboInfo && result.comboInfo.combo >= 3) {
+            //     setTimeout(() => {
+            //         this.voiceManager.saySpecial('combo_3x');
+            //     }, 2000);
+            // }
 
             // Показать бонусы
             let bonusText = [];
