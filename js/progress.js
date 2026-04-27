@@ -36,13 +36,13 @@ class ProgressSystem {
 
     // XP для следующего уровня
     getXPForNextLevel() {
-        return this.progress.playerLevel * 30; // Уменьшено с 50 до 30
+        return this.progress.playerLevel * 20; // Уменьшено с 30 до 20
     }
 
     // Прогресс до следующего уровня (0-1)
     getLevelProgress() {
-        const currentLevelXP = (this.progress.playerLevel - 1) * 30; // Уменьшено с 50 до 30
-        const nextLevelXP = this.progress.playerLevel * 30; // Уменьшено с 50 до 30
+        const currentLevelXP = (this.progress.playerLevel - 1) * 20; // Уменьшено с 30 до 20
+        const nextLevelXP = this.progress.playerLevel * 20; // Уменьшено с 30 до 20
         const xpInCurrentLevel = this.progress.totalXP - currentLevelXP;
         const xpNeeded = nextLevelXP - currentLevelXP;
         return Math.min(xpInCurrentLevel / xpNeeded, 1);
