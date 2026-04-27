@@ -2,19 +2,26 @@
 
 class App {
     constructor() {
-        this.game = new Game();
-        this.currentScreen = 'loading';
-        this.soundManager = new SoundManager();
-        this.voiceManager = new VoiceManager();
-        this.confettiManager = new ConfettiManager();
-        this.playerStats = new PlayerStats();
-        this.achievementSystem = new AchievementSystem();
-        this.tutorialSystem = new TutorialSystem();
-        this.progressSystem = new ProgressSystem();
-        this.rewardSystem = new RewardSystem();
-        this.parentDashboard = new ParentDashboard();
-        this.init();
-        this.setupErrorHandling();
+        console.log('[App] Конструктор начат');
+        try {
+            this.setupErrorHandling();
+            this.game = new Game();
+            this.currentScreen = 'loading';
+            this.soundManager = new SoundManager();
+            this.voiceManager = new VoiceManager();
+            this.confettiManager = new ConfettiManager();
+            this.playerStats = new PlayerStats();
+            this.achievementSystem = new AchievementSystem();
+            this.tutorialSystem = new TutorialSystem();
+            this.progressSystem = new ProgressSystem();
+            this.rewardSystem = new RewardSystem();
+            this.parentDashboard = new ParentDashboard();
+            console.log('[App] Все классы инициализированы');
+            this.init();
+        } catch (error) {
+            console.error('[App] Ошибка в конструкторе:', error);
+            alert('Ошибка загрузки приложения: ' + error.message);
+        }
     }
 
     setupErrorHandling() {
@@ -41,22 +48,28 @@ class App {
     }
 
     async init() {
-        // Показать экран загрузки
-        await this.simulateLoading();
+        console.log('[App.init] Начало инициализации');
+        try {
+            // Показать экран загрузки
+            console.log('[App.init] Симуляция загрузки');
+            await this.simulateLoading();
 
-        // Инициализировать обработчики событий
-        this.initEventListeners();
+            // Инициализировать обработчики событий
+            console.log('[App.init] Инициализация обработчиков событий');
+            this.initEventListeners();
 
-        // Проверить поддержку микрофона
-        if (!this.game.speechRecognizer.isSupported()) {
-            alert('Ваш браузер не поддерживает запись звука. Попробуйте Chrome или Firefox.');
-        }
+            // Проверить поддержку микрофона
+            if (!this.game.speechRecognizer.isSupported()) {
+                alert('Ваш браузер не поддерживает запись звука. Попробуйте Chrome или Firefox.');
+            }
 
-        // Загрузить голоса
-        await this.voiceManager.loadVoices();
+            // Загрузить голоса
+            console.log('[App.init] Загрузка голосов');
+            await this.voiceManager.loadVoices();
 
-        // Показать главное меню
-        this.showScreen('menu');
+            // Показать главное меню
+            console.log('[App.init] Показываем главное меню');
+            this.showScreen('menu');
 
         // Обновить индикатор уровня
         this.updateLevelIndicator();
