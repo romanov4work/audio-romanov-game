@@ -186,15 +186,33 @@ body {
     align-items: center;
     justify-content: center;
     height: 180px;
-    border: 3px dashed #FF8B3D;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.5);
 }
 
 #menu-character-animation {
-    width: 280px;
-    height: 180px;
-    background: rgba(0, 200, 150, 0.1);
+    width: 150px;
+    height: auto;
+    animation: catFloat 3s ease-in-out infinite, catBounce 2s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px rgba(107, 93, 191, 0.3));
+}
+
+@keyframes catFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(2deg);
+    }
+}
+
+@keyframes catBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 .menu-buttons {
