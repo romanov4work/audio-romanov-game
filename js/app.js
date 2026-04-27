@@ -190,27 +190,6 @@ class App {
         document.getElementById('exit-to-menu').addEventListener('click', () => {
             this.exitToMenu();
         });
-
-        // Родительская зона
-        document.getElementById('parent-zone-btn').addEventListener('click', () => {
-            this.showParentDashboard();
-        });
-
-        document.getElementById('parent-zone-btn-top').addEventListener('click', () => {
-            this.showParentDashboard();
-        });
-
-        document.getElementById('dashboard-close').addEventListener('click', () => {
-            this.hideParentDashboard();
-        });
-
-        document.getElementById('export-print').addEventListener('click', () => {
-            this.exportStatsPrint();
-        });
-
-        document.getElementById('export-csv').addEventListener('click', () => {
-            this.exportStatsCSV();
-        });
     }
 
     showScreen(screenName) {
