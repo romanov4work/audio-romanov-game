@@ -4,6 +4,9 @@ class App {
     constructor() {
         this.game = new Game();
         this.currentScreen = 'loading';
+        this.soundManager = new SoundManager();
+        this.confettiManager = new ConfettiManager();
+        this.playerStats = new PlayerStats();
         this.init();
     }
 
@@ -32,12 +35,19 @@ class App {
     initEventListeners() {
         // Главное меню
         document.getElementById('start-game').addEventListener('click', () => {
+            this.soundManager.playClick();
             this.showScreen('level-select');
             this.renderLevels();
         });
 
         document.getElementById('how-to-play').addEventListener('click', () => {
+            this.soundManager.playClick();
             this.showTutorial();
+        });
+
+        document.getElementById('settings').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.showSettings();
         });
 
         // Выбор уровня
@@ -178,6 +188,12 @@ class App {
             title = 'Прочитай быстро';
         } else if (task.type === 'sound-practice') {
             title = 'Повтори звуки';
+        } else if (task.type === 'breathing') {
+            title = 'Дыхательное упражнение';
+        } else if (task.type === 'articulation') {
+            title = 'Артикуляция';
+        } else if (task.type === 'story') {
+            title = 'Расскажи историю';
         }
 
         taskTitle.textContent = title;
@@ -185,6 +201,12 @@ class App {
         let contentHTML = `<div class="task-text">${task.text}</div>`;
         if (task.emotion) {
             contentHTML += `<div class="task-emotion">Эмоция: ${task.emotion}</div>`;
+        }
+        if (task.instruction) {
+            contentHTML += `<div class="hint">${task.instruction}</div>`;
+        } else {
+            const hint = getTaskHint(task.type);
+            contentHTML += `<div class="hint">${hint}</div>`;
         }
 
         taskContent.innerHTML = contentHTML;
@@ -227,14 +249,28 @@ class App {
         const resultDetails = document.getElementById('result-details');
 
         if (result.isSuccess) {
+            this.soundManager.playSuccess();
+            const gameCharacter = document.getElementById('game-character');
+            gameCharacter.classList.add('success');
+            setTimeout(() => gameCharacter.classList.remove('success'), 600);
+
             resultMessage.className = 'result-message success';
             const stars = '⭐'.repeat(result.stars);
-            resultMessage.textContent = `Отлично! ${stars}`;
+            resultMessage.innerHTML = `<span class="stars-animation">Отлично! ${stars}</span>`;
             resultDetails.textContent = `Точность: ${Math.round(result.similarity * 100)}%`;
+
+            if (result.stars === 3) {
+                this.confettiManager.create(window.innerWidth / 2, window.innerHeight / 2, 20);
+            }
         } else {
+            this.soundManager.playError();
             resultMessage.className = 'result-message error';
             resultMessage.textContent = 'Попробуй ещё раз!';
             resultDetails.textContent = `Ты сказал: "${result.recognized}"`;
+
+            const taskContainer = document.querySelector('.task-container');
+            taskContainer.classList.add('shake');
+            setTimeout(() => taskContainer.classList.remove('shake'), 500);
         }
 
         resultContainer.classList.add('active');
@@ -259,13 +295,44 @@ class App {
     showResults() {
         const results = this.game.getLevelResults();
 
-        document.getElementById('final-score').textContent = results.score;
-        document.getElementById('tasks-completed').textContent =
-            `${results.tasksCompleted}/${results.totalTasks}`;
-        document.getElementById('accuracy').textContent = `${results.accuracy}%`;
+        // Сохранить статистику
+        this.playerStats.addGame(
+            this.game.currentLevel.id,
+            results.score,
+            results.tasksCompleted,
+            results.totalTasks,
+            results.accuracy
+        );
+
+        // Анимация чисел
+        const finalScoreEl = document.getElementById('final-score');
+        const tasksCompletedEl = document.getElementById('tasks-completed');
+        const accuracyEl = document.getElementById('accuracy');
+
+        animateNumber(finalScoreEl, 0, results.score, 1000);
+        setTimeout(() => {
+            tasksCompletedEl.textContent = `${results.tasksCompleted}/${results.totalTasks}`;
+        }, 500);
+        setTimeout(() => {
+            accuracyEl.textContent = `${results.accuracy}%`;
+        }, 1000);
+
+        // Звук и конфетти
+        this.soundManager.playComplete();
+        this.confettiManager.celebrate();
 
         this.showScreen('results');
         this.game.reset();
+    }
+
+    showSettings() {
+        const soundEnabled = this.soundManager.enabled;
+        const message = `Настройки\n\nЗвук: ${soundEnabled ? 'Включён' : 'Выключён'}\n\nИзменить звук?`;
+
+        if (confirm(message)) {
+            const newState = this.soundManager.toggle();
+            alert(`Звук ${newState ? 'включён' : 'выключён'}`);
+        }
     }
 
     pauseGame() {

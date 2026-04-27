@@ -1,0 +1,50 @@
+<!-- Простые SVG иконки для персонажей -->
+<svg style="display: none;">
+    <defs>
+        <!-- Персонаж - дружелюбный робот -->
+        <symbol id="character-robot" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="#00C896"/>
+            <circle cx="35" cy="45" r="5" fill="#333"/>
+            <circle cx="65" cy="45" r="5" fill="#333"/>
+            <path d="M 30 60 Q 50 70 70 60" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <rect x="20" y="15" width="10" height="15" rx="5" fill="#00C896"/>
+            <rect x="70" y="15" width="10" height="15" rx="5" fill="#00C896"/>
+        </symbol>
+
+        <!-- Персонаж - весёлый кот -->
+        <symbol id="character-cat" viewBox="0 0 100 100">
+            <ellipse cx="50" cy="55" rx="35" ry="30" fill="#FF8B3D"/>
+            <polygon points="20,30 30,10 35,35" fill="#FF8B3D"/>
+            <polygon points="80,30 70,10 65,35" fill="#FF8B3D"/>
+            <circle cx="38" cy="50" r="4" fill="#333"/>
+            <circle cx="62" cy="50" r="4" fill="#333"/>
+            <path d="M 35 60 Q 50 65 65 60" stroke="#333" stroke-width="2" fill="none"/>
+            <line x1="50" y1="60" x2="50" y2="55" stroke="#333" stroke-width="2"/>
+        </symbol>
+
+        <!-- Персонаж - умная сова -->
+        <symbol id="character-owl" viewBox="0 0 100 100">
+            <ellipse cx="50" cy="55" rx="35" ry="40" fill="#2196F3"/>
+            <circle cx="35" cy="45" r="12" fill="white"/>
+            <circle cx="65" cy="45" r="12" fill="white"/>
+            <circle cx="35" cy="45" r="6" fill="#333"/>
+            <circle cx="65" cy="45" r="6" fill="#333"/>
+            <polygon points="50,50 45,58 55,58" fill="#FFC107"/>
+            <polygon points="15,40 25,30 25,50" fill="#2196F3"/>
+            <polygon points="85,40 75,30 75,50" fill="#2196F3"/>
+        </symbol>
+
+        <!-- Иконка микрофона -->
+        <symbol id="icon-microphone" viewBox="0 0 24 24">
+            <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/>
+            <path d="M 5 10 Q 5 16 12 16 Q 19 16 19 10" stroke="currentColor" stroke-width="2" fill="none"/>
+            <line x1="12" y1="16" x2="12" y2="22" stroke="currentColor" stroke-width="2"/>
+            <line x1="8" y1="22" x2="16" y2="22" stroke="currentColor" stroke-width="2"/>
+        </symbol>
+
+        <!-- Иконка звезды -->
+        <symbol id="icon-star" viewBox="0 0 24 24">
+            <path d="M 12 2 L 15 9 L 22 10 L 17 15 L 18 22 L 12 18 L 6 22 L 7 15 L 2 10 L 9 9 Z" fill="currentColor"/>
+        </symbol>
+    </defs>
+</svg>

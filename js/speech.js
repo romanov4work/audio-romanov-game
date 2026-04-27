@@ -6,6 +6,11 @@ class SpeechRecognizer {
         this.mediaRecorder = null;
         this.audioChunks = [];
         this.stream = null;
+
+        // Инициализация клиентов распознавания
+        this.whisperClient = new WhisperClient();
+        this.webSpeechClient = new WebSpeechClient();
+        this.useWebSpeech = false; // По умолчанию пытаемся использовать Whisper
     }
 
     // Проверка поддержки браузером
@@ -64,11 +69,26 @@ class SpeechRecognizer {
         });
     }
 
-    // Распознать речь через Whisper API
+    // Распознать речь через Whisper API или Web Speech API
     async recognizeSpeech(audioBlob) {
         try {
-            // TODO: Интеграция с Whisper API
-            // Пока используем заглушку для тестирования
+            // Попробовать Whisper
+            if (!this.useWebSpeech && this.whisperClient.isAvailable) {
+                try {
+                    return await this.whisperClient.transcribe(audioBlob);
+                } catch (error) {
+                    console.warn('Whisper недоступен, переключаюсь на Web Speech API');
+                    this.useWebSpeech = true;
+                }
+            }
+
+            // Fallback на Web Speech API
+            if (this.webSpeechClient.isAvailable) {
+                return await this.webSpeechClient.transcribe();
+            }
+
+            // Если ничего не работает, используем mock
+            console.warn('Все API недоступны, используется mock');
             return await this.mockRecognition(audioBlob);
         } catch (error) {
             console.error('Ошибка распознавания:', error);

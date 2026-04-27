@@ -1,0 +1,17 @@
+{
+    "whisper": {
+        "apiUrl": "http://localhost:9000/v1/audio/transcriptions",
+        "model": "whisper-1",
+        "language": "ru"
+    },
+    "elevenlabs": {
+        "apiUrl": "https://api.elevenlabs.io/v1",
+        "voiceId": "child-voice-id",
+        "model": "eleven_multilingual_v2"
+    },
+    "game": {
+        "minRecordingTime": 1000,
+        "maxRecordingTime": 30000,
+        "targetAccuracy": 0.8
+    }
+}
