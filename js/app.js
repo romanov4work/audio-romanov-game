@@ -510,6 +510,18 @@ class App {
     hideTutorial() {
         document.getElementById('tutorial-modal').classList.remove('active');
     }
+
+    toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            // Войти в полноэкранный режим
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error('Ошибка входа в полноэкранный режим:', err);
+            });
+        } else {
+            // Выйти из полноэкранного режима
+            document.exitFullscreen();
+        }
+    }
 }
 
 // Запуск приложения
