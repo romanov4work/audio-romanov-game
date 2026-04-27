@@ -54,49 +54,133 @@
 
 /* Главное меню */
 #menu-screen {
-    background: linear-gradient(135deg, #E8F4F8 0%, #D4E8F0 100%);
+    background-image: url('../sheep.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+#menu-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
 }
 
 .menu-container {
     text-align: center;
-    max-width: 600px;
-    width: 90%;
+    max-width: 1400px;
+    width: 95%;
+    position: relative;
+    z-index: 1;
+    padding: 40px 20px;
 }
 
 .game-title {
-    font-size: var(--font-size-3xl);
-    color: var(--primary-color);
-    margin-bottom: 32px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 56px;
+    color: white;
+    margin-bottom: 60px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7),
+                 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+    letter-spacing: 2px;
 }
 
 .character-container {
-    margin: 32px 0;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.character {
-    width: 150px;
-    height: 150px;
-    background: var(--secondary-color);
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-    box-shadow: var(--shadow-lg);
+    display: none;
 }
 
 .menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .menu-buttons .btn {
     width: 100%;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 18px;
+    padding: 20px 10px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-primary);
+    border: 4px solid var(--primary-color);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.menu-buttons .btn:hover {
+    background: white;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 32px rgba(255, 139, 61, 0.5);
+    border-color: var(--secondary-color);
+}
+
+.btn-icon-large {
+    font-size: 56px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.btn-label {
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Адаптивность для меню */
+@media (max-width: 1200px) {
+    .menu-buttons {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .menu-buttons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .game-title {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 600px) {
+    .menu-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .menu-buttons .btn {
+        min-height: 120px;
+        padding: 16px 8px;
+    }
+
+    .btn-icon-large {
+        font-size: 42px;
+    }
+
+    .btn-label {
+        font-size: 14px;
+    }
+
+    .game-title {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
 }
 
 /* Выбор уровня */

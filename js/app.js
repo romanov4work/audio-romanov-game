@@ -34,11 +34,45 @@ class App {
     }
 
     initEventListeners() {
-        // Главное меню
+        // Главное меню - прямые переходы к уровням
         document.getElementById('start-game').addEventListener('click', () => {
             this.soundManager.playClick();
-            this.showScreen('level-select');
-            this.renderLevels();
+            this.startLevel('tongue-twisters-easy');
+        });
+
+        document.getElementById('difficult-words').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startLevel('difficult-words');
+        });
+
+        document.getElementById('voicing').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startLevel('cartoon-voicing');
+        });
+
+        document.getElementById('speed-reading').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startLevel('speed-reading');
+        });
+
+        document.getElementById('sound-r').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startLevel('sound-r');
+        });
+
+        document.getElementById('breathing').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startLevel('breathing-exercises');
+        });
+
+        document.getElementById('articulation').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startLevel('articulation');
+        });
+
+        document.getElementById('emotions').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startLevel('emotions-advanced');
         });
 
         document.getElementById('how-to-play').addEventListener('click', () => {
@@ -75,8 +109,7 @@ class App {
 
         // Экран результатов
         document.getElementById('play-again').addEventListener('click', () => {
-            this.showScreen('level-select');
-            this.renderLevels();
+            this.showScreen('menu');
         });
 
         document.getElementById('back-to-menu-results').addEventListener('click', () => {
