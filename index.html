@@ -118,39 +118,6 @@
 
                 <!-- Игровая область -->
                 <div class="game-area">
-                    <div class="character-animation" id="game-character">
-                        <div class="cat-character">
-                            <div class="cat-head">
-                                <div class="cat-ear left">
-                                    <div class="cat-ear-inner"></div>
-                                </div>
-                                <div class="cat-ear right">
-                                    <div class="cat-ear-inner"></div>
-                                </div>
-                                <div class="cat-face">
-                                    <div class="cat-eyes">
-                                        <div class="cat-eye"></div>
-                                        <div class="cat-eye"></div>
-                                    </div>
-                                    <div class="cat-nose"></div>
-                                    <div class="cat-mouth"></div>
-                                    <div class="cat-whiskers">
-                                        <div class="cat-whisker"></div>
-                                        <div class="cat-whisker"></div>
-                                        <div class="cat-whisker"></div>
-                                        <div class="cat-whisker"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cat-body"></div>
-                            <div class="cat-paws">
-                                <div class="cat-paw"></div>
-                                <div class="cat-paw"></div>
-                            </div>
-                            <div class="cat-tail"></div>
-                        </div>
-                    </div>
-
                     <!-- Комбо индикатор -->
                     <div class="combo-indicator" id="combo-indicator" style="display: none;">
                         <div class="combo-text">
@@ -187,11 +154,6 @@
                             <span class="pulse"></span>
                             Слушаю...
                         </div>
-
-                        <!-- Кнопка подсказки -->
-                        <button class="btn btn-hint" id="hint-btn" style="display: none;">
-                            💡 Подсказка (<span id="hints-remaining">3</span>)
-                        </button>
                     </div>
 
                     <!-- Результат -->
@@ -204,6 +166,7 @@
 
                 <!-- Нижняя панель -->
                 <div class="game-footer">
+                    <button class="btn btn-secondary" id="exit-to-menu">В меню</button>
                     <button class="btn btn-secondary" id="skip-task">Пропустить</button>
                     <button class="btn btn-primary" id="next-task" style="display:none;">Дальше</button>
                 </div>
@@ -214,38 +177,6 @@
         <div id="results-screen" class="screen">
             <div class="results-container">
                 <h2>Отличная работа!</h2>
-                <div class="character-animation" id="results-character">
-                    <div class="cat-character happy">
-                        <div class="cat-head">
-                            <div class="cat-ear left">
-                                <div class="cat-ear-inner"></div>
-                            </div>
-                            <div class="cat-ear right">
-                                <div class="cat-ear-inner"></div>
-                            </div>
-                            <div class="cat-face">
-                                <div class="cat-eyes">
-                                    <div class="cat-eye"></div>
-                                    <div class="cat-eye"></div>
-                                </div>
-                                <div class="cat-nose"></div>
-                                <div class="cat-mouth"></div>
-                                <div class="cat-whiskers">
-                                    <div class="cat-whisker"></div>
-                                    <div class="cat-whisker"></div>
-                                    <div class="cat-whisker"></div>
-                                    <div class="cat-whisker"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cat-body"></div>
-                        <div class="cat-paws">
-                            <div class="cat-paw"></div>
-                            <div class="cat-paw"></div>
-                        </div>
-                        <div class="cat-tail"></div>
-                    </div>
-                </div>
 
                 <div class="results-stats">
                     <div class="stat-item">

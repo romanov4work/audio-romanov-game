@@ -142,9 +142,9 @@ class App {
             this.renderLevels();
         });
 
-        // Кнопка подсказки
-        document.getElementById('hint-btn').addEventListener('click', () => {
-            this.showHint();
+        // Кнопка выхода в меню
+        document.getElementById('exit-to-menu').addEventListener('click', () => {
+            this.exitToMenu();
         });
 
         // Родительская зона
@@ -811,6 +811,13 @@ class App {
     }
 
     pauseGame() {
+        if (confirm('Вернуться в меню? Прогресс будет потерян.')) {
+            this.game.cleanup();
+            this.showScreen('menu');
+        }
+    }
+
+    exitToMenu() {
         if (confirm('Вернуться в меню? Прогресс будет потерян.')) {
             this.game.cleanup();
             this.showScreen('menu');
