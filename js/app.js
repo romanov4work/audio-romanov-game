@@ -163,11 +163,6 @@ class App {
         document.getElementById('export-csv').addEventListener('click', () => {
             this.exportStatsCSV();
         });
-
-        // Сертификаты
-        document.getElementById('my-certificates-btn').addEventListener('click', () => {
-            this.certificateSystem.showAllCertificates();
-        });
     }
 
     showScreen(screenName) {
