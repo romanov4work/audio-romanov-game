@@ -110,17 +110,8 @@ class App {
             this.startLevel('combined-tongue-twisters');
         });
 
-        document.getElementById('voicing').addEventListener('click', () => {
-            this.soundManager.playClick();
-            this.startLevel('combined-voicing');
-        });
-
-        document.getElementById('speed-reading').addEventListener('click', () => {
-            this.soundManager.playClick();
-            this.startLevel('speed-reading');
-        });
-
-        document.getElementById('sound-improvement').addEventListener('click', () => {
+        // Туториал
+        document.getElementById('how-to-play').addEventListener('click', () => {
             this.soundManager.playClick();
             this.startLevel('sound-improvement');
         });
@@ -152,10 +143,7 @@ class App {
             this.handleRecordButton();
         });
 
-        document.getElementById('skip-task').addEventListener('click', () => {
-            this.skipTask();
-        });
-
+        // Убраны skip-task и exit-to-menu
         document.getElementById('next-task').addEventListener('click', () => {
             this.nextTask();
         });

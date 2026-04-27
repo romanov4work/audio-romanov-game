@@ -310,10 +310,13 @@ body {
 }
 
 .levels-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 24px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 16px;
     margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .level-card {
@@ -427,12 +430,16 @@ body {
 
 .task-container {
     background: var(--bg-primary);
-    border-radius: var(--radius-lg);
-    padding: 32px;
+    border-radius: 24px;
+    padding: 40px 32px;
     max-width: 700px;
     width: 100%;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow-md);
+    margin-bottom: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #task-title {
@@ -486,12 +493,13 @@ body {
 /* Запись */
 .record-container {
     text-align: center;
-    margin: 24px 0;
+    margin: 32px 0;
+    position: relative;
 }
 
 .btn-record {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: var(--primary-color);
     color: var(--text-light);
@@ -499,13 +507,17 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    font-size: var(--font-size-sm);
+    gap: 0;
+    font-size: 0;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(255, 139, 61, 0.4);
+    border: none;
+    cursor: pointer;
 }
 
 .btn-record:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 139, 61, 0.6);
 }
 
 .btn-record:active {
@@ -518,7 +530,11 @@ body {
 }
 
 .record-icon {
-    font-size: 48px;
+    font-size: 40px;
+}
+
+.record-text {
+    display: none;
 }
 
 .recording-indicator {
@@ -632,6 +648,14 @@ body {
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.game-footer .btn-secondary {
+    display: none;
+}
+
+.game-footer .btn-primary {
+    min-width: 200px;
+}
+
 /* Экран результатов */
 #results-screen {
     background: linear-gradient(135deg, #95E1D3 0%, #4ECDC4 100%);
@@ -735,72 +759,14 @@ body {
     line-height: 1.6;
 }
 
-/* Комбо индикатор */
+/* Комбо индикатор - скрыт */
 .combo-indicator {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, #FF8B3D, #FF6B35);
-    padding: 16px 24px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    animation: comboAppear 0.3s ease;
-    z-index: 10;
+    display: none !important;
 }
 
-.combo-text {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: white;
-    font-weight: 600;
-}
-
-.combo-label {
-    font-size: var(--font-size-sm);
-}
-
-.combo-value {
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-}
-
-.multiplier {
-    text-align: center;
-    color: #FFD93D;
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-    margin-top: 4px;
-}
-
-@keyframes comboAppear {
-    from {
-        transform: scale(0) rotate(-180deg);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-    }
-}
-
-/* Таймер задания */
+/* Таймер задания - скрыт */
 .task-timer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 16px;
-    padding: 8px 16px;
-    background: var(--bg-secondary);
-    border-radius: var(--radius-full);
-    font-size: var(--font-size-md);
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.timer-icon {
-    font-size: 20px;
+    display: none;
 }
 
 /* Визуализатор звука */
