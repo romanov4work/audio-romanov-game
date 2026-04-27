@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/tutorial.css">
     <link rel="stylesheet" href="css/character.css">
     <link rel="stylesheet" href="css/progress.css">
+    <link rel="stylesheet" href="css/parent-dashboard.css">
     <style>
         /* Критические стили для быстрой загрузки */
         body { margin: 0; overflow: hidden; }
@@ -281,6 +282,64 @@
             </div>
         </div>
 
+        <!-- Кнопка "Для родителей" -->
+        <button class="parent-zone-btn" id="parent-zone-btn">👨‍👩‍👧 Для родителей</button>
+
+        <!-- Модальное окно родительской статистики -->
+        <div class="parent-dashboard-modal" id="parent-dashboard-modal">
+            <div class="dashboard-content">
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">📊 Статистика ребёнка</h2>
+                    <button class="dashboard-close" id="dashboard-close">×</button>
+                </div>
+
+                <div class="stats-overview" id="stats-overview">
+                    <!-- Заполняется через JS -->
+                </div>
+
+                <div class="modules-section">
+                    <h3 class="section-title">Прогресс по модулям</h3>
+                    <div class="modules-grid" id="modules-stats">
+                        <!-- Заполняется через JS -->
+                    </div>
+                </div>
+
+                <div class="strengths-weaknesses">
+                    <div class="strength-card">
+                        <div class="card-header">
+                            <span class="card-icon">💪</span>
+                            <h3 class="card-title">Сильные стороны</h3>
+                        </div>
+                        <div class="strength-list" id="strengths-list">
+                            <!-- Заполняется через JS -->
+                        </div>
+                    </div>
+
+                    <div class="weakness-card">
+                        <div class="card-header">
+                            <span class="card-icon">📈</span>
+                            <h3 class="card-title">Над чем работать</h3>
+                        </div>
+                        <div class="weakness-list" id="weaknesses-list">
+                            <!-- Заполняется через JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendations-section">
+                    <h3 class="section-title">Рекомендации</h3>
+                    <div id="recommendations-list">
+                        <!-- Заполняется через JS -->
+                    </div>
+                </div>
+
+                <div class="export-buttons">
+                    <button class="export-btn print" id="export-print">🖨️ Печать</button>
+                    <button class="export-btn csv" id="export-csv">📊 Скачать CSV</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Модальное окно "Как играть" -->
         <div id="tutorial-modal" class="modal">
             <div class="modal-content">
@@ -314,6 +373,7 @@
     <script src="js/whisper-client.js"></script>
     <script src="js/voice.js"></script>
     <script src="js/progress.js"></script>
+    <script src="js/parent-dashboard.js"></script>
     <script src="js/advanced-features.js"></script>
     <script src="js/tutorial.js"></script>
     <script src="js/combined-levels.js"></script>

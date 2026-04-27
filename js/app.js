@@ -12,6 +12,7 @@ class App {
         this.tutorialSystem = new TutorialSystem();
         this.progressSystem = new ProgressSystem();
         this.rewardSystem = new RewardSystem();
+        this.parentDashboard = new ParentDashboard();
         this.init();
     }
 
@@ -143,6 +144,23 @@ class App {
         // Кнопка подсказки
         document.getElementById('hint-btn').addEventListener('click', () => {
             this.showHint();
+        });
+
+        // Родительская зона
+        document.getElementById('parent-zone-btn').addEventListener('click', () => {
+            this.showParentDashboard();
+        });
+
+        document.getElementById('dashboard-close').addEventListener('click', () => {
+            this.hideParentDashboard();
+        });
+
+        document.getElementById('export-print').addEventListener('click', () => {
+            this.exportStatsPrint();
+        });
+
+        document.getElementById('export-csv').addEventListener('click', () => {
+            this.exportStatsCSV();
         });
     }
 
@@ -795,6 +813,124 @@ class App {
             // Выйти из полноэкранного режима
             document.exitFullscreen();
         }
+    }
+
+    showParentDashboard() {
+        const stats = this.parentDashboard.getFullStats();
+
+        // Заполняем общую статистику
+        const statsOverview = document.getElementById('stats-overview');
+        statsOverview.innerHTML = `
+            <div class="stat-card primary">
+                <div class="stat-value">${stats.playerLevel}</div>
+                <div class="stat-label">Уровень</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-value">${stats.totalGames}</div>
+                <div class="stat-label">Игр сыграно</div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-value">${stats.totalStars}</div>
+                <div class="stat-label">Звёзд собрано</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">${stats.timeStats.streak}</div>
+                <div class="stat-label">Дней подряд</div>
+            </div>
+        `;
+
+        // Заполняем статистику по модулям
+        const modulesStats = document.getElementById('modules-stats');
+        modulesStats.innerHTML = stats.modules.map(module => `
+            <div class="module-stat-card">
+                <div class="module-icon-stat">${module.icon}</div>
+                <div class="module-stat-info">
+                    <div class="module-stat-name">${module.name}</div>
+                    <div class="module-stat-details">
+                        <div>Игр: ${module.plays}</div>
+                        <div>Звёзды: ${module.stars} ⭐</div>
+                        <div>Точность: ${module.bestAccuracy}%</div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Заполняем сильные стороны
+        const strengthsList = document.getElementById('strengths-list');
+        strengthsList.innerHTML = stats.strengths.length > 0
+            ? stats.strengths.map(strength => `
+                <div class="strength-item">
+                    <div class="item-icon">${strength.icon}</div>
+                    <div class="item-info">
+                        <div class="item-title">${strength.title}</div>
+                        <div class="item-description">${strength.description}</div>
+                    </div>
+                </div>
+            `).join('')
+            : '<p style="text-align: center; color: var(--text-secondary);">Продолжайте играть, чтобы увидеть сильные стороны!</p>';
+
+        // Заполняем слабые стороны
+        const weaknessesList = document.getElementById('weaknesses-list');
+        weaknessesList.innerHTML = stats.weaknesses.length > 0
+            ? stats.weaknesses.map(weakness => `
+                <div class="weakness-item">
+                    <div class="item-icon">${weakness.icon}</div>
+                    <div class="item-info">
+                        <div class="item-title">${weakness.title}</div>
+                        <div class="item-description">${weakness.description}</div>
+                    </div>
+                </div>
+            `).join('')
+            : '<p style="text-align: center; color: var(--text-secondary);">Отлично! Слабых сторон не обнаружено.</p>';
+
+        // Заполняем рекомендации
+        const recommendationsList = document.getElementById('recommendations-list');
+        recommendationsList.innerHTML = stats.recommendations.map(rec => `
+            <div class="recommendation-card">
+                <div class="recommendation-icon">${rec.icon}</div>
+                <div class="recommendation-content">
+                    <div class="recommendation-title">${rec.title}</div>
+                    <div class="recommendation-description">${rec.description}</div>
+                </div>
+            </div>
+        `).join('');
+
+        // Показываем модальное окно
+        document.getElementById('parent-dashboard-modal').classList.add('active');
+    }
+
+    hideParentDashboard() {
+        document.getElementById('parent-dashboard-modal').classList.remove('active');
+    }
+
+    exportStatsPrint() {
+        const stats = this.parentDashboard.getFullStats();
+        const html = this.parentDashboard.generatePrintableHTML(stats);
+
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.focus();
+
+        setTimeout(() => {
+            printWindow.print();
+        }, 250);
+    }
+
+    exportStatsCSV() {
+        const csv = this.parentDashboard.exportToCSV(this.parentDashboard.getFullStats());
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+
+        link.setAttribute('href', url);
+        link.setAttribute('download', `статистика_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 }
 
