@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/enhanced-visuals.css">
     <link rel="stylesheet" href="css/tutorial.css">
     <link rel="stylesheet" href="css/character.css">
+    <link rel="stylesheet" href="css/progress.css">
     <style>
         /* Критические стили для быстрой загрузки */
         body { margin: 0; overflow: hidden; }
@@ -44,6 +45,18 @@
 
         <!-- Главное меню -->
         <div id="menu-screen" class="screen">
+            <!-- Индикатор уровня игрока -->
+            <div class="player-level-indicator" id="player-level-indicator">
+                <div class="level-badge" id="level-badge">1</div>
+                <div class="level-info">
+                    <div class="level-text">Уровень</div>
+                    <div class="xp-bar">
+                        <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="xp-text" id="xp-text">0 / 100 XP</div>
+                </div>
+            </div>
+
             <!-- Верхняя панель с кнопками -->
             <div class="top-controls">
                 <button class="btn btn-icon-small" id="how-to-play" title="Как играть?">❓</button>
@@ -300,6 +313,7 @@
     <script src="js/utils.js"></script>
     <script src="js/whisper-client.js"></script>
     <script src="js/voice.js"></script>
+    <script src="js/progress.js"></script>
     <script src="js/advanced-features.js"></script>
     <script src="js/tutorial.js"></script>
     <script src="js/combined-levels.js"></script>

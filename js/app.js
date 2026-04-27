@@ -10,6 +10,8 @@ class App {
         this.playerStats = new PlayerStats();
         this.achievementSystem = new AchievementSystem();
         this.tutorialSystem = new TutorialSystem();
+        this.progressSystem = new ProgressSystem();
+        this.rewardSystem = new RewardSystem();
         this.init();
     }
 
@@ -30,6 +32,12 @@ class App {
 
         // Показать главное меню
         this.showScreen('menu');
+
+        // Обновить индикатор уровня
+        this.updateLevelIndicator();
+
+        // Обновить состояние модулей (заблокированные/разблокированные)
+        this.updateModulesState();
 
         // Приветствие персонажа
         setTimeout(() => {
@@ -565,6 +573,33 @@ class App {
 
         // Не сохранять статистику в демо-режиме
         if (!this.tutorialSystem.isDemoMode()) {
+            // Рассчитать XP
+            const xp = this.progressSystem.calculateXP(results.score, results.accuracy, results.tasksCompleted);
+
+            // Добавить XP и проверить повышение уровня
+            const leveledUp = this.progressSystem.addXP(xp);
+
+            // Обновить прогресс модуля
+            this.progressSystem.updateModuleProgress(
+                this.game.currentLevel.id,
+                results.score,
+                results.accuracy
+            );
+
+            // Показать уведомление о XP
+            this.showXPNotification(xp);
+
+            // Если повысился уровень
+            if (leveledUp) {
+                setTimeout(() => {
+                    const level = this.progressSystem.getPlayerLevel();
+                    this.rewardSystem.show('levelUp', { level });
+                    this.soundManager.playAchievement();
+                    this.updateLevelIndicator();
+                    this.updateModulesState();
+                }, 2000);
+            }
+
             // Сохранить статистику
             const stats = this.playerStats.getStats();
             stats.maxCombo = Math.max(stats.maxCombo || 0, results.maxCombo);
@@ -617,6 +652,67 @@ class App {
 
         this.showScreen('results');
         this.game.reset();
+    }
+
+    // Обновить индикатор уровня
+    updateLevelIndicator() {
+        const level = this.progressSystem.getPlayerLevel();
+        const progress = this.progressSystem.getLevelProgress();
+        const totalXP = this.progressSystem.getTotalXP();
+        const xpNeeded = this.progressSystem.getXPForNextLevel();
+
+        document.getElementById('level-badge').textContent = level;
+        document.getElementById('xp-fill').style.width = `${progress * 100}%`;
+        document.getElementById('xp-text').textContent = `${totalXP} / ${xpNeeded} XP`;
+    }
+
+    // Обновить состояние модулей (заблокированные/разблокированные)
+    updateModulesState() {
+        const modules = [
+            { id: 'combined-tongue-twisters', element: 'tongue-twisters', name: 'Скороговорки и слова' },
+            { id: 'combined-voicing', element: 'voicing', name: 'Озвучка и дыхание' },
+            { id: 'speed-reading', element: 'speed-reading', name: 'Скорочтение' },
+            { id: 'sound-improvement', element: 'sound-improvement', name: 'Как улучшить звуки' }
+        ];
+
+        modules.forEach((module, index) => {
+            const btn = document.getElementById(module.element);
+            const isUnlocked = this.progressSystem.isModuleUnlocked(module.id);
+
+            if (isUnlocked) {
+                btn.classList.remove('module-locked');
+                btn.style.pointerEvents = 'auto';
+                btn.style.opacity = '1';
+            } else {
+                btn.classList.add('module-locked');
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.6';
+
+                // Показать требуемый уровень
+                const requiredLevel = index + 1;
+                const label = btn.querySelector('.btn-label');
+                if (label && !label.textContent.includes('Уровень')) {
+                    label.innerHTML += `<br><small style="font-size: 12px; color: #999;">Уровень ${requiredLevel}</small>`;
+                }
+            }
+        });
+    }
+
+    // Показать уведомление о XP
+    showXPNotification(xp) {
+        const notification = document.createElement('div');
+        notification.className = 'xp-notification';
+        notification.textContent = `+${xp} XP`;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('active');
+        }, 100);
+
+        setTimeout(() => {
+            notification.classList.remove('active');
+            setTimeout(() => notification.remove(), 500);
+        }, 2000);
     }
 
     showNewAchievements(achievements) {
