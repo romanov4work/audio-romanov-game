@@ -55,7 +55,7 @@
 /* Главное меню */
 #menu-screen {
     background-image: url('../sheep.png');
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
     align-items: center;
@@ -70,7 +70,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     z-index: 0;
 }
 
@@ -156,6 +156,10 @@
     .game-title {
         font-size: 42px;
     }
+
+    #menu-screen {
+        background-size: cover;
+    }
 }
 
 @media (max-width: 600px) {
@@ -180,6 +184,10 @@
     .game-title {
         font-size: 32px;
         margin-bottom: 40px;
+    }
+
+    #menu-screen {
+        background-size: cover;
     }
 }
 
