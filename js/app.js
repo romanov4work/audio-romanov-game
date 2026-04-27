@@ -8,6 +8,7 @@ class App {
         this.confettiManager = new ConfettiManager();
         this.playerStats = new PlayerStats();
         this.achievementSystem = new AchievementSystem();
+        this.tutorialSystem = new TutorialSystem();
         this.init();
     }
 
@@ -25,6 +26,13 @@ class App {
 
         // Показать главное меню
         this.showScreen('menu');
+
+        // Показать туториал при первом запуске
+        if (this.tutorialSystem.shouldShowTutorial()) {
+            setTimeout(() => {
+                this.tutorialSystem.startTutorial();
+            }, 500);
+        }
     }
 
     simulateLoading() {
@@ -34,6 +42,12 @@ class App {
     }
 
     initEventListeners() {
+        // Главное меню - режим тренировки
+        document.getElementById('demo-mode').addEventListener('click', () => {
+            this.soundManager.playClick();
+            this.startDemoMode();
+        });
+
         // Главное меню - объединённые модули
         document.getElementById('tongue-twisters').addEventListener('click', () => {
             this.soundManager.playClick();
@@ -171,6 +185,43 @@ class App {
         this.showScreen('game');
         this.updateGameUI();
         this.showCurrentTask();
+
+        // Показать подсказку для первого задания
+        if (this.game.currentTaskIndex === 0 && !this.tutorialSystem.isDemoMode()) {
+            setTimeout(() => {
+                this.tutorialSystem.showInGameHint('first-task');
+            }, 1000);
+        }
+
+        // Показать индикатор демо-режима
+        if (this.tutorialSystem.isDemoMode()) {
+            this.showDemoModeIndicator();
+        }
+    }
+
+    startDemoMode() {
+        const demoLevel = this.tutorialSystem.startDemoMode();
+        this.game.currentLevel = demoLevel;
+        this.game.currentTaskIndex = 0;
+        this.game.score = 0;
+        this.game.tasksCompleted = 0;
+        this.game.comboSystem.reset();
+        this.startLevel('demo-mode');
+    }
+
+    showDemoModeIndicator() {
+        const indicator = document.createElement('div');
+        indicator.className = 'demo-mode-indicator';
+        indicator.id = 'demo-mode-indicator';
+        indicator.innerHTML = '🎓 Режим тренировки - оценки не сохраняются';
+        document.body.appendChild(indicator);
+    }
+
+    hideDemoModeIndicator() {
+        const indicator = document.getElementById('demo-mode-indicator');
+        if (indicator) {
+            indicator.remove();
+        }
     }
 
     updateGameUI() {
@@ -322,6 +373,20 @@ class App {
             resultMessage.innerHTML = `<span class="stars-animation">Отлично! ${stars}</span>`;
             resultDetails.textContent = `Точность: ${Math.round(result.similarity * 100)}%`;
 
+            // Показать подсказку при хорошем результате
+            if (!this.tutorialSystem.isDemoMode() && this.game.currentTaskIndex === 0) {
+                setTimeout(() => {
+                    this.tutorialSystem.showInGameHint('good-job');
+                }, 1000);
+            }
+
+            // Показать подсказку при начале комбо
+            if (result.comboInfo && result.comboInfo.combo === 2) {
+                setTimeout(() => {
+                    this.tutorialSystem.showInGameHint('combo-started');
+                }, 1500);
+            }
+
             // Показать бонусы
             let bonusText = [];
             if (result.speedBonus > 0) {
@@ -351,6 +416,13 @@ class App {
             resultMessage.textContent = 'Попробуй ещё раз!';
             resultDetails.textContent = `Ты сказал: "${result.recognized}"`;
             resultBonus.style.display = 'none';
+
+            // Показать подсказку при неудаче
+            if (!this.tutorialSystem.isDemoMode()) {
+                setTimeout(() => {
+                    this.tutorialSystem.showInGameHint('try-again');
+                }, 1000);
+            }
 
             // Скрыть комбо
             document.getElementById('combo-indicator').style.display = 'none';
@@ -396,24 +468,36 @@ class App {
 
     showResults() {
         this.stopTaskTimer();
+        this.hideDemoModeIndicator();
 
         const results = this.game.getLevelResults();
 
-        // Сохранить статистику
-        const stats = this.playerStats.getStats();
-        stats.maxCombo = Math.max(stats.maxCombo || 0, results.maxCombo);
-        stats.fastestLevel = Math.min(stats.fastestLevel || Infinity, results.fastestLevel);
+        // Не сохранять статистику в демо-режиме
+        if (!this.tutorialSystem.isDemoMode()) {
+            // Сохранить статистику
+            const stats = this.playerStats.getStats();
+            stats.maxCombo = Math.max(stats.maxCombo || 0, results.maxCombo);
+            stats.fastestLevel = Math.min(stats.fastestLevel || Infinity, results.fastestLevel);
 
-        this.playerStats.addGame(
-            this.game.currentLevel.id,
-            results.score,
-            results.tasksCompleted,
-            results.totalTasks,
-            results.accuracy
-        );
+            this.playerStats.addGame(
+                this.game.currentLevel.id,
+                results.score,
+                results.tasksCompleted,
+                results.totalTasks,
+                results.accuracy
+            );
 
-        // Проверить достижения
-        const newAchievements = this.achievementSystem.check(this.playerStats.getStats());
+            // Проверить достижения
+            const newAchievements = this.achievementSystem.check(this.playerStats.getStats());
+
+            // Показать новые достижения
+            if (newAchievements.length > 0) {
+                this.showNewAchievements(newAchievements);
+            }
+        } else {
+            // Выйти из демо-режима
+            this.tutorialSystem.exitDemoMode();
+        }
 
         // Анимация чисел
         const finalScoreEl = document.getElementById('final-score');
@@ -431,11 +515,6 @@ class App {
         setTimeout(() => {
             maxComboEl.textContent = results.maxCombo;
         }, 1500);
-
-        // Показать новые достижения
-        if (newAchievements.length > 0) {
-            this.showNewAchievements(newAchievements);
-        }
 
         // Звук и конфетти
         this.soundManager.playComplete();

@@ -1,0 +1,326 @@
+/* Стили для обучающего режима */
+
+/* Оверлей туториала */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.tutorial-overlay.active {
+    display: flex;
+}
+
+.tutorial-content {
+    background: white;
+    border-radius: 24px;
+    padding: 48px 40px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+}
+
+.tutorial-character {
+    font-size: 80px;
+    margin-bottom: 24px;
+    animation: bounce 1s ease infinite;
+}
+
+.tutorial-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.tutorial-text {
+    font-size: 18px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.tutorial-demo {
+    margin: 32px 0;
+    padding: 24px;
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tutorial-animation {
+    font-size: 64px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Демо элементы */
+.tutorial-menu-demo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.demo-button {
+    padding: 16px;
+    background: white;
+    border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.demo-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(255, 139, 61, 0.3);
+}
+
+.tutorial-mic-demo {
+    display: flex;
+    justify-content: center;
+}
+
+.demo-mic-button {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.demo-mic-icon {
+    font-size: 48px;
+}
+
+.tutorial-stars-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.demo-stars {
+    font-size: 48px;
+    animation: starShine 1.5s ease-in-out infinite;
+}
+
+.demo-accuracy {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--success-color);
+}
+
+.tutorial-combo-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.demo-combo {
+    background: linear-gradient(135deg, #FF8B3D, #FF6B35);
+    padding: 16px 32px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-weight: 700;
+}
+
+.demo-combo-label {
+    font-size: 14px;
+}
+
+.demo-combo-value {
+    font-size: 32px;
+}
+
+.demo-multiplier {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFD93D;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* Кнопки туториала */
+.tutorial-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.tutorial-buttons .btn {
+    min-width: 140px;
+}
+
+.tutorial-progress {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Всплывающие подсказки */
+.tutorial-toast {
+    position: fixed;
+    top: 100px;
+    right: 24px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    max-width: 320px;
+    z-index: 9999;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+}
+
+.tutorial-toast.active {
+    transform: translateX(0);
+}
+
+.toast-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.toast-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Кнопка "Режим тренировки" */
+.btn-demo-mode {
+    background: linear-gradient(135deg, #95E1D3, #4ECDC4);
+    color: white;
+    border: none;
+}
+
+.btn-demo-mode:hover {
+    background: linear-gradient(135deg, #4ECDC4, #95E1D3);
+}
+
+/* Индикатор демо-режима */
+.demo-mode-indicator {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #95E1D3, #4ECDC4);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    animation: slideDown 0.3s ease;
+}
+
+/* Анимации */
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes starShine {
+    0%, 100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.1);
+        filter: brightness(1.3);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tutorial-content {
+        padding: 32px 24px;
+    }
+
+    .tutorial-character {
+        font-size: 64px;
+    }
+
+    .tutorial-title {
+        font-size: 24px;
+    }
+
+    .tutorial-text {
+        font-size: 16px;
+    }
+
+    .tutorial-demo {
+        padding: 16px;
+        min-height: 100px;
+    }
+
+    .tutorial-menu-demo {
+        grid-template-columns: 1fr;
+    }
+
+    .demo-mic-button {
+        width: 120px;
+        height: 120px;
+    }
+
+    .tutorial-toast {
+        right: 16px;
+        left: 16px;
+        max-width: none;
+    }
+}
