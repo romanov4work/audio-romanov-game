@@ -182,7 +182,16 @@ body {
 }
 
 .character-container {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 32px auto;
+    height: 250px;
+}
+
+#menu-character-animation {
+    width: 300px;
+    height: 250px;
 }
 
 .menu-buttons {

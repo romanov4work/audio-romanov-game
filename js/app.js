@@ -16,6 +16,7 @@ class App {
             this.progressSystem = new ProgressSystem();
             this.rewardSystem = new RewardSystem();
             this.parentDashboard = new ParentDashboard();
+            this.menuCharacterAnimation = null; // Lottie анимация персонажа
             console.log('[App] Все классы инициализированы');
             this.init();
         } catch (error) {
@@ -71,6 +72,9 @@ class App {
             console.log('[App.init] Показываем главное меню');
             this.showScreen('menu');
 
+            // Инициализировать Lottie анимацию персонажа
+            this.initMenuCharacterAnimation();
+
             // Обновить индикатор уровня
             this.updateLevelIndicator();
 
@@ -101,6 +105,35 @@ class App {
         return new Promise(resolve => {
             setTimeout(() => resolve(), 2000);
         });
+    }
+
+    initMenuCharacterAnimation() {
+        try {
+            const container = document.getElementById('menu-character-animation');
+            if (!container) {
+                console.warn('[App] Контейнер для анимации персонажа не найден');
+                return;
+            }
+
+            // Проверяем наличие библиотеки Lottie
+            if (typeof lottie === 'undefined') {
+                console.warn('[App] Библиотека Lottie не загружена');
+                return;
+            }
+
+            // Инициализируем Lottie анимацию
+            this.menuCharacterAnimation = lottie.loadAnimation({
+                container: container,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'assets/character-animation.json'
+            });
+
+            console.log('[App] Lottie анимация персонажа инициализирована');
+        } catch (error) {
+            console.error('[App] Ошибка инициализации Lottie анимации:', error);
+        }
     }
 
     initEventListeners() {
