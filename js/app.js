@@ -5,6 +5,7 @@ class App {
         this.game = new Game();
         this.currentScreen = 'loading';
         this.soundManager = new SoundManager();
+        this.voiceManager = new VoiceManager();
         this.confettiManager = new ConfettiManager();
         this.playerStats = new PlayerStats();
         this.achievementSystem = new AchievementSystem();
@@ -24,14 +25,23 @@ class App {
             alert('Ваш браузер не поддерживает запись звука. Попробуйте Chrome или Firefox.');
         }
 
+        // Загрузить голоса
+        await this.voiceManager.loadVoices();
+
         // Показать главное меню
         this.showScreen('menu');
+
+        // Приветствие персонажа
+        setTimeout(() => {
+            this.voiceManager.sayWelcome();
+        }, 500);
 
         // Показать туториал при первом запуске
         if (this.tutorialSystem.shouldShowTutorial()) {
             setTimeout(() => {
+                this.voiceManager.saySpecial('tutorial_start');
                 this.tutorialSystem.startTutorial();
-            }, 500);
+            }, 3000);
         }
     }
 
@@ -296,6 +306,11 @@ class App {
         }
 
         taskContent.innerHTML = contentHTML;
+
+        // Озвучить инструкцию к заданию
+        setTimeout(() => {
+            this.voiceManager.sayInstruction(task.type);
+        }, 500);
     }
 
     startTaskTimer() {
@@ -364,6 +379,12 @@ class App {
 
         if (result.isSuccess) {
             this.soundManager.playSuccess();
+
+            // Озвучить похвалу
+            setTimeout(() => {
+                this.voiceManager.sayPraise();
+            }, 500);
+
             const gameCharacter = document.getElementById('game-character');
             gameCharacter.classList.add('success');
             setTimeout(() => gameCharacter.classList.remove('success'), 600);
@@ -384,7 +405,19 @@ class App {
             if (result.comboInfo && result.comboInfo.combo === 2) {
                 setTimeout(() => {
                     this.tutorialSystem.showInGameHint('combo-started');
+                    this.voiceManager.saySpecial('combo_start');
                 }, 1500);
+            }
+
+            // Озвучить комбо
+            if (result.comboInfo && result.comboInfo.combo === 2) {
+                setTimeout(() => {
+                    this.voiceManager.saySpecial('combo_2x');
+                }, 2000);
+            } else if (result.comboInfo && result.comboInfo.combo >= 3) {
+                setTimeout(() => {
+                    this.voiceManager.saySpecial('combo_3x');
+                }, 2000);
             }
 
             // Показать бонусы
@@ -412,6 +445,12 @@ class App {
             }
         } else {
             this.soundManager.playError();
+
+            // Озвучить подбадривание
+            setTimeout(() => {
+                this.voiceManager.sayEncourage();
+            }, 500);
+
             resultMessage.className = 'result-message error';
             resultMessage.textContent = 'Попробуй ещё раз!';
             resultDetails.textContent = `Ты сказал: "${result.recognized}"`;
@@ -472,6 +511,11 @@ class App {
 
         const results = this.game.getLevelResults();
 
+        // Озвучить завершение уровня
+        setTimeout(() => {
+            this.voiceManager.saySpecial('level_complete');
+        }, 1000);
+
         // Не сохранять статистику в демо-режиме
         if (!this.tutorialSystem.isDemoMode()) {
             // Сохранить статистику
@@ -493,6 +537,10 @@ class App {
             // Показать новые достижения
             if (newAchievements.length > 0) {
                 this.showNewAchievements(newAchievements);
+                // Озвучить достижение
+                setTimeout(() => {
+                    this.voiceManager.saySpecial('achievement');
+                }, 2000);
             }
         } else {
             // Выйти из демо-режима
