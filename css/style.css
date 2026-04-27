@@ -172,21 +172,21 @@
 .menu-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 1000px;
+    gap: 24px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .menu-buttons .btn {
     width: 100%;
-    min-height: 140px;
+    min-height: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    font-size: 18px;
-    padding: 20px 10px;
+    gap: 16px;
+    font-size: 20px;
+    padding: 28px 16px;
     background: rgba(255, 255, 255, 0.95);
     color: var(--text-primary);
     border: 4px solid var(--primary-color);
@@ -203,13 +203,13 @@
 }
 
 .btn-icon-large {
-    font-size: 56px;
+    font-size: 72px;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .btn-label {
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
 }
 

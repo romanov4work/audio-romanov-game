@@ -10,12 +10,12 @@ class ProgressSystem {
         return this.storage.load('progress', {
             playerLevel: 1,
             totalXP: 0,
-            unlockedModules: ['demo-mode'], // Демо всегда открыт
+            unlockedModules: ['demo-mode', 'combined-tongue-twisters', 'combined-voicing', 'speed-reading', 'sound-improvement'], // Временно все открыты
             moduleProgress: {
                 'combined-tongue-twisters': { unlocked: true, stars: 0, bestAccuracy: 0, completed: false },
-                'combined-voicing': { unlocked: false, stars: 0, bestAccuracy: 0, completed: false },
-                'speed-reading': { unlocked: false, stars: 0, bestAccuracy: 0, completed: false },
-                'sound-improvement': { unlocked: false, stars: 0, bestAccuracy: 0, completed: false }
+                'combined-voicing': { unlocked: true, stars: 0, bestAccuracy: 0, completed: false },
+                'speed-reading': { unlocked: true, stars: 0, bestAccuracy: 0, completed: false },
+                'sound-improvement': { unlocked: true, stars: 0, bestAccuracy: 0, completed: false }
             }
         });
     }
