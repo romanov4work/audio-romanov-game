@@ -115,11 +115,15 @@ class App {
                 return;
             }
 
+            console.log('[App] Контейнер найден:', container);
+
             // Проверяем наличие библиотеки Lottie
             if (typeof lottie === 'undefined') {
                 console.warn('[App] Библиотека Lottie не загружена');
                 return;
             }
+
+            console.log('[App] Библиотека Lottie загружена');
 
             // Инициализируем Lottie анимацию
             this.menuCharacterAnimation = lottie.loadAnimation({
@@ -128,6 +132,14 @@ class App {
                 loop: true,
                 autoplay: true,
                 path: 'assets/character-animation.json'
+            });
+
+            this.menuCharacterAnimation.addEventListener('DOMLoaded', () => {
+                console.log('[App] Lottie анимация загружена успешно');
+            });
+
+            this.menuCharacterAnimation.addEventListener('data_failed', (error) => {
+                console.error('[App] Ошибка загрузки данных Lottie:', error);
             });
 
             console.log('[App] Lottie анимация персонажа инициализирована');
