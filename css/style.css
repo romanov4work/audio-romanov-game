@@ -186,11 +186,15 @@ body {
     align-items: center;
     justify-content: center;
     height: 180px;
+    border: 3px dashed #FF8B3D;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 #menu-character-animation {
     width: 280px;
     height: 180px;
+    background: rgba(0, 200, 150, 0.1);
 }
 
 .menu-buttons {
