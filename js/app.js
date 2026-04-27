@@ -14,6 +14,30 @@ class App {
         this.rewardSystem = new RewardSystem();
         this.parentDashboard = new ParentDashboard();
         this.init();
+        this.setupErrorHandling();
+    }
+
+    setupErrorHandling() {
+        // Глобальный обработчик ошибок
+        window.addEventListener('error', (event) => {
+            console.error('[GLOBAL ERROR]', {
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno,
+                error: event.error
+            });
+        });
+
+        // Обработчик необработанных промисов
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('[UNHANDLED PROMISE REJECTION]', {
+                reason: event.reason,
+                promise: event.promise
+            });
+        });
+
+        console.log('[App] Обработчики ошибок установлены');
     }
 
     async init() {
@@ -357,31 +381,33 @@ class App {
     }
 
     async handleRecordButton() {
+        console.log('[handleRecordButton] Начало');
         const recordBtn = document.getElementById('record-btn');
         const recordingIndicator = document.getElementById('recording-indicator');
         const visualizer = document.getElementById('audio-visualizer');
 
         if (!this.game.speechRecognizer.isRecording) {
             // Начать запись
-            const success = await this.game.startRecording();
-            if (success) {
-                // Звук начала записи
-                this.soundManager.playRecordStart();
+            console.log('[handleRecordButton] Начинаем запись');
+            try {
+                const success = await this.game.startRecording();
+                console.log('[handleRecordButton] Результат startRecording:', success);
+                if (success) {
+                    // Звук начала записи
+                    this.soundManager.playRecordStart();
 
-                recordBtn.classList.add('recording');
-                recordBtn.querySelector('.record-text').textContent = 'Говори!';
-                recordingIndicator.classList.add('active');
-                visualizer.style.display = 'block';
-
-                // Анимация персонажа - говорит
-                const gameCharacter = document.getElementById('game-character');
-                const catCharacter = gameCharacter.querySelector('.cat-character');
-                if (catCharacter) {
-                    catCharacter.classList.add('talking');
+                    recordBtn.classList.add('recording');
+                    recordBtn.querySelector('.record-text').textContent = 'Говори!';
+                    recordingIndicator.classList.add('active');
+                    visualizer.style.display = 'block';
                 }
+            } catch (error) {
+                console.error('[handleRecordButton] Ошибка при начале записи:', error);
+                alert('Ошибка доступа к микрофону: ' + error.message);
             }
         } else {
             // Остановить запись и проверить
+            console.log('[handleRecordButton] Останавливаем запись');
             // Звук остановки записи
             this.soundManager.playRecordStop();
 
@@ -390,25 +416,15 @@ class App {
             recordingIndicator.classList.remove('active');
             visualizer.style.display = 'none';
 
-            const gameCharacter = document.getElementById('game-character');
-            const catCharacter = gameCharacter.querySelector('.cat-character');
-            if (catCharacter) {
-                catCharacter.classList.remove('talking');
-                catCharacter.classList.add('thinking');
-            }
-
             try {
+                console.log('[handleRecordButton] Вызываем stopRecordingAndCheck');
                 const result = await this.game.stopRecordingAndCheck();
-                if (catCharacter) {
-                    catCharacter.classList.remove('thinking');
-                }
+                console.log('[handleRecordButton] Результат распознавания:', result);
                 this.showTaskResult(result);
             } catch (error) {
-                alert('Ошибка проверки. Попробуй ещё раз!');
+                console.error('[handleRecordButton] Ошибка проверки:', error);
+                alert('Ошибка проверки: ' + error.message);
                 recordBtn.querySelector('.record-text').textContent = 'Нажми и говори';
-                if (catCharacter) {
-                    catCharacter.classList.remove('thinking');
-                }
             }
         }
     }
@@ -422,17 +438,8 @@ class App {
         const resultDetails = document.getElementById('result-details');
         const resultBonus = document.getElementById('result-bonus');
 
-        const gameCharacter = document.getElementById('game-character');
-        const catCharacter = gameCharacter.querySelector('.cat-character');
-
         if (result.isSuccess) {
             this.soundManager.playSuccess();
-
-            // Анимация персонажа - радость
-            if (catCharacter) {
-                catCharacter.classList.add('happy');
-                setTimeout(() => catCharacter.classList.remove('happy'), 1000);
-            }
 
             // Озвучить похвалу
             setTimeout(() => {
@@ -491,11 +498,6 @@ class App {
             }
 
             if (result.stars === 3) {
-                // Анимация успеха
-                if (catCharacter) {
-                    catCharacter.classList.add('success');
-                    setTimeout(() => catCharacter.classList.remove('success'), 1000);
-                }
                 // Звук звезды для каждой звезды
                 this.soundManager.playStar();
                 setTimeout(() => this.soundManager.playStar(), 100);
@@ -512,12 +514,6 @@ class App {
             }
         } else {
             this.soundManager.playError();
-
-            // Анимация персонажа - грусть
-            if (catCharacter) {
-                catCharacter.classList.add('sad');
-                setTimeout(() => catCharacter.classList.remove('sad'), 2000);
-            }
 
             // Озвучить подбадривание
             setTimeout(() => {

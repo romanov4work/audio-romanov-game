@@ -74,27 +74,39 @@ class Game {
 
     // Остановить запись и проверить
     async stopRecordingAndCheck() {
-        if (this.isProcessing) return null;
+        console.log('[Game.stopRecordingAndCheck] Начало');
+        if (this.isProcessing) {
+            console.warn('[Game.stopRecordingAndCheck] Уже обрабатывается');
+            return null;
+        }
         this.isProcessing = true;
 
         // Остановить визуализатор
         this.audioVisualizer.stop();
 
         const taskTime = this.taskTimer.stop();
+        console.log('[Game.stopRecordingAndCheck] Время задания:', taskTime, 'мс');
 
         try {
+            console.log('[Game.stopRecordingAndCheck] Останавливаем запись');
             const audioBlob = await this.speechRecognizer.stopRecording();
+            console.log('[Game.stopRecordingAndCheck] Аудио получено, размер:', audioBlob.size, 'байт');
+
+            console.log('[Game.stopRecordingAndCheck] Распознаём речь');
             const recognition = await this.speechRecognizer.recognizeSpeech(audioBlob);
+            console.log('[Game.stopRecordingAndCheck] Распознано:', recognition);
 
             const currentTask = this.getCurrentTask();
             if (!currentTask) {
                 throw new Error('Нет текущего задания');
             }
+            console.log('[Game.stopRecordingAndCheck] Текущее задание:', currentTask.text);
 
             const comparison = this.speechRecognizer.compareTexts(
                 recognition.text,
                 currentTask.text
             );
+            console.log('[Game.stopRecordingAndCheck] Сравнение:', comparison);
 
             const isSuccess = comparison.similarity >= currentTask.targetAccuracy;
             let stars = this.calculateStars(comparison.similarity, currentTask.targetAccuracy);
@@ -136,10 +148,11 @@ class Game {
                 taskTime: Math.floor(taskTime / 1000)
             };
 
+            console.log('[Game.stopRecordingAndCheck] Результат:', result);
             this.isProcessing = false;
             return result;
         } catch (error) {
-            console.error('Ошибка проверки:', error);
+            console.error('[Game.stopRecordingAndCheck] Ошибка:', error);
             this.isProcessing = false;
             throw error;
         }
