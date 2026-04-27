@@ -16,7 +16,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const cats = [
             { id: 'menu-character-animation', path: 'assets/character-animation.json', name: 'Кот 1 (idle)' },
             { id: 'menu-character-animation-2', path: 'assets/cat-uchi-real.json', name: 'Кот 2 (real)' },
-            { id: 'menu-character-animation-3', path: 'assets/cat-home.json', name: 'Кот 3 (home)' }
+            { id: 'menu-character-animation-3', path: 'assets/cat-home.json', name: 'Кот 3 (home)' },
+            { id: 'menu-character-animation-4', path: 'assets/cat-confetti.json', name: 'Кот 4 (confetti)' }
         ];
 
         cats.forEach(cat => {
