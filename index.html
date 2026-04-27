@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/ui-kit.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/enhanced-visuals.css">
     <style>
         /* Критические стили для быстрой загрузки */
         body { margin: 0; overflow: hidden; }
@@ -96,10 +97,25 @@
                         </svg>
                     </div>
 
+                    <!-- Комбо индикатор -->
+                    <div class="combo-indicator" id="combo-indicator" style="display: none;">
+                        <div class="combo-text">
+                            <span class="combo-label">КОМБО</span>
+                            <span class="combo-value" id="combo-value">0</span>
+                        </div>
+                        <div class="multiplier" id="multiplier">x1</div>
+                    </div>
+
                     <div class="task-container">
                         <h3 id="task-title">Задание</h3>
                         <div class="task-content" id="task-content">
                             <!-- Контент задания -->
+                        </div>
+
+                        <!-- Таймер задания -->
+                        <div class="task-timer" id="task-timer">
+                            <span class="timer-icon">⏱️</span>
+                            <span class="timer-value" id="timer-value">0:00</span>
                         </div>
                     </div>
 
@@ -109,16 +125,26 @@
                             <span class="record-icon">🎤</span>
                             <span class="record-text">Нажми и говори</span>
                         </button>
+
+                        <!-- Визуализация звука -->
+                        <canvas id="audio-visualizer" width="300" height="100" style="display: none;"></canvas>
+
                         <div class="recording-indicator" id="recording-indicator">
                             <span class="pulse"></span>
                             Слушаю...
                         </div>
+
+                        <!-- Кнопка подсказки -->
+                        <button class="btn btn-hint" id="hint-btn" style="display: none;">
+                            💡 Подсказка (<span id="hints-remaining">3</span>)
+                        </button>
                     </div>
 
                     <!-- Результат -->
                     <div class="result-container" id="result-container">
                         <div class="result-message" id="result-message"></div>
                         <div class="result-details" id="result-details"></div>
+                        <div class="result-bonus" id="result-bonus"></div>
                     </div>
                 </div>
 
@@ -156,6 +182,17 @@
                         <span class="stat-value" id="accuracy">0%</span>
                         <span class="stat-label">Точность</span>
                     </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🔥</span>
+                        <span class="stat-value" id="max-combo">0</span>
+                        <span class="stat-label">Макс комбо</span>
+                    </div>
+                </div>
+
+                <!-- Новые достижения -->
+                <div class="new-achievements" id="new-achievements" style="display: none;">
+                    <h3>🎉 Новые достижения!</h3>
+                    <div id="achievements-list"></div>
                 </div>
 
                 <div class="results-buttons">
@@ -196,6 +233,7 @@
     <!-- Скрипты -->
     <script src="js/utils.js"></script>
     <script src="js/whisper-client.js"></script>
+    <script src="js/advanced-features.js"></script>
     <script src="js/content.js"></script>
     <script src="js/levels.js"></script>
     <script src="js/speech.js"></script>

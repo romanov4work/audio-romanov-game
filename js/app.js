@@ -7,6 +7,7 @@ class App {
         this.soundManager = new SoundManager();
         this.confettiManager = new ConfettiManager();
         this.playerStats = new PlayerStats();
+        this.achievementSystem = new AchievementSystem();
         this.init();
     }
 
@@ -92,6 +93,11 @@ class App {
             this.showScreen('level-select');
             this.renderLevels();
         });
+
+        // Кнопка подсказки
+        document.getElementById('hint-btn').addEventListener('click', () => {
+            this.showHint();
+        });
     }
 
     showScreen(screenName) {
@@ -172,6 +178,21 @@ class App {
         // Скрыть результат предыдущего задания
         document.getElementById('result-container').classList.remove('active');
         document.getElementById('next-task').style.display = 'none';
+        document.getElementById('result-bonus').style.display = 'none';
+
+        // Сбросить таймер
+        this.game.taskTimer.reset();
+        this.startTaskTimer();
+
+        // Показать кнопку подсказки
+        const hintBtn = document.getElementById('hint-btn');
+        const hintsRemaining = document.getElementById('hints-remaining');
+        if (this.game.hintSystem.canUseHint()) {
+            hintBtn.style.display = 'inline-block';
+            hintsRemaining.textContent = this.game.hintSystem.getRemaining();
+        } else {
+            hintBtn.style.display = 'none';
+        }
 
         // Показать задание
         const taskTitle = document.getElementById('task-title');
@@ -212,9 +233,27 @@ class App {
         taskContent.innerHTML = contentHTML;
     }
 
+    startTaskTimer() {
+        const timerValue = document.getElementById('timer-value');
+        this.timerInterval = setInterval(() => {
+            const seconds = this.game.taskTimer.getElapsedSeconds();
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerValue.textContent = `${minutes}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    stopTaskTimer() {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+    }
+
     async handleRecordButton() {
         const recordBtn = document.getElementById('record-btn');
         const recordingIndicator = document.getElementById('recording-indicator');
+        const visualizer = document.getElementById('audio-visualizer');
 
         if (!this.game.speechRecognizer.isRecording) {
             // Начать запись
@@ -223,12 +262,21 @@ class App {
                 recordBtn.classList.add('recording');
                 recordBtn.querySelector('.record-text').textContent = 'Говори!';
                 recordingIndicator.classList.add('active');
+                visualizer.style.display = 'block';
+
+                // Анимация персонажа
+                const gameCharacter = document.getElementById('game-character');
+                gameCharacter.classList.add('talking');
             }
         } else {
             // Остановить запись и проверить
             recordBtn.classList.remove('recording');
             recordBtn.querySelector('.record-text').textContent = 'Проверяю...';
             recordingIndicator.classList.remove('active');
+            visualizer.style.display = 'none';
+
+            const gameCharacter = document.getElementById('game-character');
+            gameCharacter.classList.remove('talking');
 
             try {
                 const result = await this.game.stopRecordingAndCheck();
@@ -247,6 +295,7 @@ class App {
         const resultContainer = document.getElementById('result-container');
         const resultMessage = document.getElementById('result-message');
         const resultDetails = document.getElementById('result-details');
+        const resultBonus = document.getElementById('result-bonus');
 
         if (result.isSuccess) {
             this.soundManager.playSuccess();
@@ -259,6 +308,26 @@ class App {
             resultMessage.innerHTML = `<span class="stars-animation">Отлично! ${stars}</span>`;
             resultDetails.textContent = `Точность: ${Math.round(result.similarity * 100)}%`;
 
+            // Показать бонусы
+            let bonusText = [];
+            if (result.speedBonus > 0) {
+                bonusText.push(`⚡ Бонус за скорость: +${result.speedBonus} звезда`);
+            }
+            if (result.comboInfo && result.comboInfo.combo > 1) {
+                bonusText.push(`🔥 Комбо x${result.comboInfo.combo}! Множитель: x${result.comboInfo.multiplier}`);
+            }
+            if (bonusText.length > 0) {
+                resultBonus.innerHTML = bonusText.join('<br>');
+                resultBonus.style.display = 'block';
+            } else {
+                resultBonus.style.display = 'none';
+            }
+
+            // Обновить комбо индикатор
+            if (result.comboInfo && result.comboInfo.combo > 1) {
+                this.updateComboDisplay(result.comboInfo.combo, result.comboInfo.multiplier);
+            }
+
             if (result.stars === 3) {
                 this.confettiManager.create(window.innerWidth / 2, window.innerHeight / 2, 20);
             }
@@ -267,6 +336,10 @@ class App {
             resultMessage.className = 'result-message error';
             resultMessage.textContent = 'Попробуй ещё раз!';
             resultDetails.textContent = `Ты сказал: "${result.recognized}"`;
+            resultBonus.style.display = 'none';
+
+            // Скрыть комбо
+            document.getElementById('combo-indicator').style.display = 'none';
 
             const taskContainer = document.querySelector('.task-container');
             taskContainer.classList.add('shake');
@@ -277,6 +350,21 @@ class App {
         document.getElementById('next-task').style.display = 'block';
 
         this.updateGameUI();
+    }
+
+    updateComboDisplay(combo, multiplier) {
+        const comboIndicator = document.getElementById('combo-indicator');
+        const comboValue = document.getElementById('combo-value');
+        const multiplierEl = document.getElementById('multiplier');
+
+        comboValue.textContent = combo;
+        multiplierEl.textContent = `x${multiplier}`;
+        comboIndicator.style.display = 'block';
+
+        // Анимация
+        comboIndicator.classList.remove('combo-appear');
+        void comboIndicator.offsetWidth; // Trigger reflow
+        comboIndicator.classList.add('combo-appear');
     }
 
     nextTask() {
@@ -293,9 +381,15 @@ class App {
     }
 
     showResults() {
+        this.stopTaskTimer();
+
         const results = this.game.getLevelResults();
 
         // Сохранить статистику
+        const stats = this.playerStats.getStats();
+        stats.maxCombo = Math.max(stats.maxCombo || 0, results.maxCombo);
+        stats.fastestLevel = Math.min(stats.fastestLevel || Infinity, results.fastestLevel);
+
         this.playerStats.addGame(
             this.game.currentLevel.id,
             results.score,
@@ -304,10 +398,14 @@ class App {
             results.accuracy
         );
 
+        // Проверить достижения
+        const newAchievements = this.achievementSystem.check(this.playerStats.getStats());
+
         // Анимация чисел
         const finalScoreEl = document.getElementById('final-score');
         const tasksCompletedEl = document.getElementById('tasks-completed');
         const accuracyEl = document.getElementById('accuracy');
+        const maxComboEl = document.getElementById('max-combo');
 
         animateNumber(finalScoreEl, 0, results.score, 1000);
         setTimeout(() => {
@@ -316,6 +414,14 @@ class App {
         setTimeout(() => {
             accuracyEl.textContent = `${results.accuracy}%`;
         }, 1000);
+        setTimeout(() => {
+            maxComboEl.textContent = results.maxCombo;
+        }, 1500);
+
+        // Показать новые достижения
+        if (newAchievements.length > 0) {
+            this.showNewAchievements(newAchievements);
+        }
 
         // Звук и конфетти
         this.soundManager.playComplete();
@@ -323,6 +429,47 @@ class App {
 
         this.showScreen('results');
         this.game.reset();
+    }
+
+    showNewAchievements(achievements) {
+        const container = document.getElementById('new-achievements');
+        const list = document.getElementById('achievements-list');
+
+        list.innerHTML = '';
+        achievements.forEach((achievement, index) => {
+            setTimeout(() => {
+                const item = document.createElement('div');
+                item.className = 'achievement-item';
+                item.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-info">
+                        <div class="achievement-name">${achievement.name}</div>
+                        <div class="achievement-description">${achievement.description}</div>
+                    </div>
+                `;
+                list.appendChild(item);
+                this.soundManager.playSuccess();
+            }, index * 500);
+        });
+
+        container.style.display = 'block';
+    }
+
+    showHint() {
+        const task = this.game.getCurrentTask();
+        if (!task) return;
+
+        const hint = this.game.hintSystem.useHint(task);
+        if (hint) {
+            alert(`💡 Подсказка:\n\n${hint}`);
+
+            const hintsRemaining = document.getElementById('hints-remaining');
+            hintsRemaining.textContent = this.game.hintSystem.getRemaining();
+
+            if (!this.game.hintSystem.canUseHint()) {
+                document.getElementById('hint-btn').style.display = 'none';
+            }
+        }
     }
 
     showSettings() {

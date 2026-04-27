@@ -9,6 +9,14 @@ class Game {
         this.totalTasks = 0;
         this.speechRecognizer = new SpeechRecognizer();
         this.isProcessing = false;
+
+        // Новые системы
+        this.comboSystem = new ComboSystem();
+        this.hintSystem = new HintSystem();
+        this.taskTimer = new TaskTimer();
+        this.audioVisualizer = new AudioVisualizer('audio-visualizer');
+        this.levelStartTime = 0;
+        this.fastestLevel = Infinity;
     }
 
     // Начать уровень
@@ -23,6 +31,9 @@ class Game {
         this.score = 0;
         this.tasksCompleted = 0;
         this.totalTasks = this.currentLevel.tasks.length;
+        this.comboSystem.reset();
+        this.hintSystem.reset();
+        this.levelStartTime = Date.now();
 
         return true;
     }
@@ -47,6 +58,13 @@ class Game {
 
         try {
             await this.speechRecognizer.startRecording();
+            this.taskTimer.start();
+
+            // Запустить визуализатор
+            if (this.speechRecognizer.stream) {
+                await this.audioVisualizer.init(this.speechRecognizer.stream);
+            }
+
             return true;
         } catch (error) {
             console.error('Ошибка начала записи:', error);
@@ -58,6 +76,11 @@ class Game {
     async stopRecordingAndCheck() {
         if (this.isProcessing) return null;
         this.isProcessing = true;
+
+        // Остановить визуализатор
+        this.audioVisualizer.stop();
+
+        const taskTime = this.taskTimer.stop();
 
         try {
             const audioBlob = await this.speechRecognizer.stopRecording();
@@ -73,18 +96,45 @@ class Game {
                 currentTask.text
             );
 
+            const isSuccess = comparison.similarity >= currentTask.targetAccuracy;
+            let stars = this.calculateStars(comparison.similarity, currentTask.targetAccuracy);
+
+            // Бонусы
+            let speedBonus = 0;
+            let comboBonus = 0;
+            let comboInfo = null;
+
+            if (isSuccess) {
+                // Бонус за скорость (если быстрее 10 секунд)
+                if (taskTime < 10000) {
+                    speedBonus = 1;
+                    stars = Math.min(3, stars + speedBonus);
+                }
+
+                // Комбо
+                comboInfo = this.comboSystem.addSuccess();
+                const comboStars = Math.floor(comboInfo.combo / 3);
+                comboBonus = comboStars;
+                stars = Math.min(3, stars + comboBonus);
+
+                this.score += stars * comboInfo.multiplier;
+                this.tasksCompleted++;
+            } else {
+                this.comboSystem.addFailure();
+            }
+
             const result = {
                 recognized: recognition.text,
                 expected: currentTask.text,
                 similarity: comparison.similarity,
-                isSuccess: comparison.similarity >= currentTask.targetAccuracy,
-                stars: this.calculateStars(comparison.similarity, currentTask.targetAccuracy)
+                isSuccess: isSuccess,
+                stars: stars,
+                baseStars: this.calculateStars(comparison.similarity, currentTask.targetAccuracy),
+                speedBonus: speedBonus,
+                comboBonus: comboBonus,
+                comboInfo: comboInfo,
+                taskTime: Math.floor(taskTime / 1000)
             };
-
-            if (result.isSuccess) {
-                this.score += result.stars;
-                this.tasksCompleted++;
-            }
 
             this.isProcessing = false;
             return result;
@@ -121,13 +171,19 @@ class Game {
 
     // Получить результаты уровня
     getLevelResults() {
+        const levelTime = Math.floor((Date.now() - this.levelStartTime) / 1000);
+        this.fastestLevel = Math.min(this.fastestLevel, levelTime);
+
         return {
-            score: this.score,
+            score: Math.floor(this.score),
             tasksCompleted: this.tasksCompleted,
             totalTasks: this.totalTasks,
             accuracy: this.totalTasks > 0
                 ? Math.round((this.tasksCompleted / this.totalTasks) * 100)
-                : 0
+                : 0,
+            maxCombo: this.comboSystem.maxCombo,
+            levelTime: levelTime,
+            fastestLevel: this.fastestLevel
         };
     }
 
@@ -144,6 +200,8 @@ class Game {
     // Очистка ресурсов
     cleanup() {
         this.speechRecognizer.cleanup();
+        this.audioVisualizer.stop();
+        this.taskTimer.reset();
         this.reset();
     }
 }

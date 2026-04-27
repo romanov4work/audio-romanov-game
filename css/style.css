@@ -485,7 +485,184 @@
     line-height: 1.6;
 }
 
-/* Адаптивность */
+/* Комбо индикатор */
+.combo-indicator {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #FF8B3D, #FF6B35);
+    padding: 16px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    animation: comboAppear 0.3s ease;
+    z-index: 10;
+}
+
+.combo-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-weight: 600;
+}
+
+.combo-label {
+    font-size: var(--font-size-sm);
+}
+
+.combo-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+}
+
+.multiplier {
+    text-align: center;
+    color: #FFD93D;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+@keyframes comboAppear {
+    from {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Таймер задания */
+.task-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.timer-icon {
+    font-size: 20px;
+}
+
+/* Визуализатор звука */
+#audio-visualizer {
+    margin: 16px auto;
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.05);
+    display: block;
+}
+
+/* Кнопка подсказки */
+.btn-hint {
+    margin-top: 16px;
+    background: var(--warning-color);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    padding: 8px 16px;
+}
+
+.btn-hint:hover {
+    background: #FFB300;
+}
+
+.btn-hint:disabled {
+    background: var(--text-disabled);
+    cursor: not-allowed;
+}
+
+/* Бонус в результатах */
+.result-bonus {
+    margin-top: 12px;
+    padding: 12px;
+    background: linear-gradient(135deg, #FFD93D, #FFC107);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    color: var(--text-primary);
+    animation: bonusAppear 0.5s ease;
+}
+
+@keyframes bonusAppear {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Достижения */
+.new-achievements {
+    margin: 24px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #FFD93D, #FFC107);
+    border-radius: var(--radius-lg);
+    animation: slideUp 0.5s ease;
+}
+
+.new-achievements h3 {
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+#achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: var(--radius-md);
+    animation: achievementPop 0.5s ease;
+}
+
+.achievement-icon {
+    font-size: 32px;
+}
+
+.achievement-info {
+    flex: 1;
+}
+
+.achievement-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.achievement-description {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+@keyframes achievementPop {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
 @media (max-width: 768px) {
     .game-title {
         font-size: var(--font-size-2xl);
