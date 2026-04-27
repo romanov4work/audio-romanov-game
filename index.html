@@ -47,16 +47,25 @@
 
         <!-- Главное меню -->
         <div id="menu-screen" class="screen">
-            <!-- Индикатор уровня игрока -->
-            <div class="player-level-indicator" id="player-level-indicator">
-                <div class="level-badge" id="level-badge">1</div>
-                <div class="level-info">
-                    <div class="level-text">Уровень</div>
-                    <div class="xp-bar">
-                        <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+            <!-- Заголовок игры -->
+            <h1 class="game-title">Озвучиваем Мультики</h1>
+
+            <!-- Верхняя панель: Уровень и Статистика -->
+            <div class="top-info-bar">
+                <!-- Индикатор уровня игрока -->
+                <div class="player-level-indicator" id="player-level-indicator">
+                    <div class="level-badge" id="level-badge">1</div>
+                    <div class="level-info">
+                        <div class="level-text">Уровень</div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="xp-text" id="xp-text">0 / 100 XP</div>
                     </div>
-                    <div class="xp-text" id="xp-text">0 / 100 XP</div>
                 </div>
+
+                <!-- Кнопка статистики -->
+                <button class="parent-zone-btn-top" id="parent-zone-btn-top">📊 Статистика</button>
             </div>
 
             <!-- Верхняя панель с кнопками -->
@@ -66,7 +75,6 @@
             </div>
 
             <div class="menu-container">
-                <h1 class="game-title">Озвучиваем Мультики</h1>
 
                 <div class="menu-buttons">
                     <button class="btn btn-demo-mode" id="demo-mode">

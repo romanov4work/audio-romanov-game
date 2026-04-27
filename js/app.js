@@ -196,6 +196,10 @@ class App {
             this.showParentDashboard();
         });
 
+        document.getElementById('parent-zone-btn-top').addEventListener('click', () => {
+            this.showParentDashboard();
+        });
+
         document.getElementById('dashboard-close').addEventListener('click', () => {
             this.hideParentDashboard();
         });
