@@ -42,49 +42,31 @@
 
         <!-- Главное меню -->
         <div id="menu-screen" class="screen">
+            <!-- Верхняя панель с кнопками -->
+            <div class="top-controls">
+                <button class="btn btn-icon-small" id="how-to-play" title="Как играть?">❓</button>
+                <button class="btn btn-icon-small" id="fullscreen-btn" title="Полноэкранный режим">⛶</button>
+            </div>
+
             <div class="menu-container">
                 <h1 class="game-title">Озвучиваем Мультики</h1>
 
                 <div class="menu-buttons">
-                    <button class="btn" id="start-game">
+                    <button class="btn" id="tongue-twisters">
                         <span class="btn-icon-large">👅</span>
-                        <span class="btn-label">Скороговорки</span>
-                    </button>
-                    <button class="btn" id="difficult-words">
-                        <span class="btn-icon-large">📚</span>
-                        <span class="btn-label">Сложные слова</span>
+                        <span class="btn-label">Скороговорки и слова</span>
                     </button>
                     <button class="btn" id="voicing">
                         <span class="btn-icon-large">🎭</span>
-                        <span class="btn-label">Озвучка</span>
+                        <span class="btn-label">Озвучка и дыхание</span>
                     </button>
                     <button class="btn" id="speed-reading">
                         <span class="btn-icon-large">⚡</span>
                         <span class="btn-label">Скорочтение</span>
                     </button>
-                    <button class="btn" id="sound-r">
+                    <button class="btn" id="sound-improvement">
                         <span class="btn-icon-large">🗣️</span>
-                        <span class="btn-label">Звук Р</span>
-                    </button>
-                    <button class="btn" id="breathing">
-                        <span class="btn-icon-large">💨</span>
-                        <span class="btn-label">Дыхание</span>
-                    </button>
-                    <button class="btn" id="articulation">
-                        <span class="btn-icon-large">😛</span>
-                        <span class="btn-label">Артикуляция</span>
-                    </button>
-                    <button class="btn" id="emotions">
-                        <span class="btn-icon-large">🎬</span>
-                        <span class="btn-label">Эмоции</span>
-                    </button>
-                    <button class="btn" id="how-to-play">
-                        <span class="btn-icon-large">❓</span>
-                        <span class="btn-label">Как играть</span>
-                    </button>
-                    <button class="btn" id="settings">
-                        <span class="btn-icon-large">⚙️</span>
-                        <span class="btn-label">Настройки</span>
+                        <span class="btn-label">Как улучшить звуки</span>
                     </button>
                 </div>
             </div>
@@ -259,7 +241,7 @@
     <script src="js/whisper-client.js"></script>
     <script src="js/advanced-features.js"></script>
     <script src="js/content.js"></script>
-    <script src="js/levels.js"></script>
+    <script src="js/combined-levels.js"></script>
     <script src="js/speech.js"></script>
     <script src="js/game.js"></script>
     <script src="js/app.js"></script>

@@ -34,20 +34,15 @@ class App {
     }
 
     initEventListeners() {
-        // Главное меню - прямые переходы к уровням
-        document.getElementById('start-game').addEventListener('click', () => {
+        // Главное меню - объединённые модули
+        document.getElementById('tongue-twisters').addEventListener('click', () => {
             this.soundManager.playClick();
-            this.startLevel('tongue-twisters-easy');
-        });
-
-        document.getElementById('difficult-words').addEventListener('click', () => {
-            this.soundManager.playClick();
-            this.startLevel('difficult-words');
+            this.startLevel('combined-tongue-twisters');
         });
 
         document.getElementById('voicing').addEventListener('click', () => {
             this.soundManager.playClick();
-            this.startLevel('cartoon-voicing');
+            this.startLevel('combined-voicing');
         });
 
         document.getElementById('speed-reading').addEventListener('click', () => {
@@ -55,34 +50,20 @@ class App {
             this.startLevel('speed-reading');
         });
 
-        document.getElementById('sound-r').addEventListener('click', () => {
+        document.getElementById('sound-improvement').addEventListener('click', () => {
             this.soundManager.playClick();
-            this.startLevel('sound-r');
+            this.startLevel('sound-improvement');
         });
 
-        document.getElementById('breathing').addEventListener('click', () => {
-            this.soundManager.playClick();
-            this.startLevel('breathing-exercises');
-        });
-
-        document.getElementById('articulation').addEventListener('click', () => {
-            this.soundManager.playClick();
-            this.startLevel('articulation');
-        });
-
-        document.getElementById('emotions').addEventListener('click', () => {
-            this.soundManager.playClick();
-            this.startLevel('emotions-advanced');
-        });
-
+        // Верхние кнопки
         document.getElementById('how-to-play').addEventListener('click', () => {
             this.soundManager.playClick();
             this.showTutorial();
         });
 
-        document.getElementById('settings').addEventListener('click', () => {
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
             this.soundManager.playClick();
-            this.showSettings();
+            this.toggleFullscreen();
         });
 
         // Выбор уровня
