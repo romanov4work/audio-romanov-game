@@ -134,6 +134,16 @@ class SpeechRecognizer {
 
     // Вычисление схожести строк (алгоритм Левенштейна упрощённый)
     calculateSimilarity(str1, str2) {
+        // Если распознанный текст пустой - 0% схожести
+        if (!str1 || str1.length === 0) {
+            return 0.0;
+        }
+
+        // Если ожидаемый текст пустой - 0% схожести
+        if (!str2 || str2.length === 0) {
+            return 0.0;
+        }
+
         const longer = str1.length > str2.length ? str1 : str2;
         const shorter = str1.length > str2.length ? str2 : str1;
 
