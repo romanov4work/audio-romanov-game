@@ -114,21 +114,38 @@
     font-size: 56px;
     color: #FFFFFF;
     margin-bottom: 60px;
-    text-shadow:
-        0 0 10px rgba(0, 0, 0, 0.9),
-        0 0 20px rgba(0, 0, 0, 0.8),
-        2px 2px 4px rgba(0, 0, 0, 1),
-        -2px -2px 4px rgba(0, 0, 0, 1);
     font-weight: 900;
     letter-spacing: 3px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+
+    /* Чёткая обводка */
+    text-shadow:
+        /* Чёрная обводка */
+        -3px -3px 0 #000,
+        3px -3px 0 #000,
+        -3px 3px 0 #000,
+        3px 3px 0 #000,
+        -3px 0 0 #000,
+        3px 0 0 #000,
+        0 -3px 0 #000,
+        0 3px 0 #000,
+        /* Дополнительная обводка для толщины */
+        -4px -4px 0 #000,
+        4px -4px 0 #000,
+        -4px 4px 0 #000,
+        4px 4px 0 #000,
+        /* Облачная тень */
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        0 8px 20px rgba(0, 0, 0, 0.3);
+
+    /* Убрать градиент и размытие */
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #FFFFFF;
+    background-clip: unset;
+    filter: none;
 }
 
 .character-container {
