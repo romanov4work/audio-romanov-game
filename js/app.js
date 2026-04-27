@@ -339,6 +339,9 @@ class App {
             // Начать запись
             const success = await this.game.startRecording();
             if (success) {
+                // Звук начала записи
+                this.soundManager.playRecordStart();
+
                 recordBtn.classList.add('recording');
                 recordBtn.querySelector('.record-text').textContent = 'Говори!';
                 recordingIndicator.classList.add('active');
@@ -353,6 +356,9 @@ class App {
             }
         } else {
             // Остановить запись и проверить
+            // Звук остановки записи
+            this.soundManager.playRecordStop();
+
             recordBtn.classList.remove('recording');
             recordBtn.querySelector('.record-text').textContent = 'Проверяю...';
             recordingIndicator.classList.remove('active');
@@ -464,7 +470,19 @@ class App {
                     catCharacter.classList.add('success');
                     setTimeout(() => catCharacter.classList.remove('success'), 1000);
                 }
+                // Звук звезды для каждой звезды
+                this.soundManager.playStar();
+                setTimeout(() => this.soundManager.playStar(), 100);
+                setTimeout(() => this.soundManager.playStar(), 200);
+
                 this.confettiManager.create(window.innerWidth / 2, window.innerHeight / 2, 20);
+            }
+
+            // Звук комбо
+            if (result.comboInfo && result.comboInfo.combo > 1) {
+                setTimeout(() => {
+                    this.soundManager.playCombo();
+                }, 800);
             }
         } else {
             this.soundManager.playError();
@@ -618,7 +636,8 @@ class App {
                     </div>
                 `;
                 list.appendChild(item);
-                this.soundManager.playSuccess();
+                // Звук достижения
+                this.soundManager.playAchievement();
             }, index * 500);
         });
 
@@ -631,6 +650,9 @@ class App {
 
         const hint = this.game.hintSystem.useHint(task);
         if (hint) {
+            // Звук подсказки
+            this.soundManager.playHint();
+
             alert(`💡 Подсказка:\n\n${hint}`);
 
             const hintsRemaining = document.getElementById('hints-remaining');

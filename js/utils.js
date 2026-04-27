@@ -5,48 +5,114 @@ class SoundManager {
     constructor() {
         this.sounds = {};
         this.enabled = true;
+        this.audioContext = null;
+        this.initAudioContext();
+    }
+
+    initAudioContext() {
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            console.warn('Web Audio API не поддерживается');
+        }
     }
 
     // Создать звук из частоты (для простых эффектов)
-    playTone(frequency, duration, type = 'sine') {
-        if (!this.enabled) return;
+    playTone(frequency, duration, type = 'sine', volume = 0.3) {
+        if (!this.enabled || !this.audioContext) return;
 
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
 
         oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
+        gainNode.connect(this.audioContext.destination);
 
         oscillator.frequency.value = frequency;
         oscillator.type = type;
 
-        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+        gainNode.gain.setValueAtTime(volume, this.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
 
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + duration);
+        oscillator.start(this.audioContext.currentTime);
+        oscillator.stop(this.audioContext.currentTime + duration);
     }
 
+    // Звук успеха (восходящая мелодия)
     playSuccess() {
-        this.playTone(523.25, 0.1); // C5
-        setTimeout(() => this.playTone(659.25, 0.1), 100); // E5
-        setTimeout(() => this.playTone(783.99, 0.2), 200); // G5
+        this.playTone(523.25, 0.1, 'sine', 0.25); // C5
+        setTimeout(() => this.playTone(659.25, 0.1, 'sine', 0.25), 100); // E5
+        setTimeout(() => this.playTone(783.99, 0.2, 'sine', 0.3), 200); // G5
     }
 
+    // Звук ошибки (нисходящий грустный)
     playError() {
-        this.playTone(200, 0.3, 'sawtooth');
+        this.playTone(400, 0.15, 'sawtooth', 0.2);
+        setTimeout(() => this.playTone(300, 0.15, 'sawtooth', 0.2), 150);
     }
 
+    // Звук клика (короткий щелчок)
     playClick() {
-        this.playTone(800, 0.05);
+        this.playTone(800, 0.05, 'sine', 0.2);
     }
 
+    // Звук завершения уровня (фанфары)
     playComplete() {
-        this.playTone(523.25, 0.1);
-        setTimeout(() => this.playTone(659.25, 0.1), 100);
-        setTimeout(() => this.playTone(783.99, 0.1), 200);
-        setTimeout(() => this.playTone(1046.50, 0.3), 300);
+        this.playTone(523.25, 0.1, 'sine', 0.3); // C5
+        setTimeout(() => this.playTone(659.25, 0.1, 'sine', 0.3), 100); // E5
+        setTimeout(() => this.playTone(783.99, 0.1, 'sine', 0.3), 200); // G5
+        setTimeout(() => this.playTone(1046.50, 0.3, 'sine', 0.35), 300); // C6
+    }
+
+    // Звук комбо (быстрая трель)
+    playCombo() {
+        const notes = [659.25, 783.99, 659.25, 783.99]; // E5, G5, E5, G5
+        notes.forEach((freq, index) => {
+            setTimeout(() => {
+                this.playTone(freq, 0.08, 'square', 0.2);
+            }, index * 80);
+        });
+    }
+
+    // Звук достижения (волшебный)
+    playAchievement() {
+        const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5-E6
+        notes.forEach((freq, index) => {
+            setTimeout(() => {
+                this.playTone(freq, 0.12, 'sine', 0.25);
+            }, index * 120);
+        });
+    }
+
+    // Звук подсказки (мягкий колокольчик)
+    playHint() {
+        this.playTone(1046.50, 0.3, 'sine', 0.2); // C6
+        setTimeout(() => {
+            this.playTone(1318.51, 0.3, 'sine', 0.15); // E6
+        }, 150);
+    }
+
+    // Звук начала записи (восходящий)
+    playRecordStart() {
+        this.playTone(440, 0.08, 'sine', 0.2); // A4
+        setTimeout(() => {
+            this.playTone(880, 0.08, 'sine', 0.2); // A5
+        }, 80);
+    }
+
+    // Звук остановки записи (нисходящий)
+    playRecordStop() {
+        this.playTone(880, 0.08, 'sine', 0.2); // A5
+        setTimeout(() => {
+            this.playTone(440, 0.08, 'sine', 0.2); // A4
+        }, 80);
+    }
+
+    // Звук звезды (блеск)
+    playStar() {
+        this.playTone(1568, 0.1, 'sine', 0.15); // G6
+        setTimeout(() => {
+            this.playTone(2093, 0.15, 'sine', 0.1); // C7
+        }, 50);
     }
 
     toggle() {
