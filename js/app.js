@@ -763,6 +763,11 @@ class App {
 
         modules.forEach((module, index) => {
             const btn = document.getElementById(module.element);
+            if (!btn) {
+                console.warn(`[App] Кнопка модуля ${module.element} не найдена`);
+                return;
+            }
+
             const isUnlocked = this.progressSystem.isModuleUnlocked(module.id);
 
             if (isUnlocked) {
