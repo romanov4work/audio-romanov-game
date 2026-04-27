@@ -152,10 +152,7 @@ class App {
             this.showScreen('menu');
         });
 
-        // Игровой экран
-        document.getElementById('pause-game').addEventListener('click', () => {
-            this.pauseGame();
-        });
+        // Игровой экран - кнопка записи
 
         document.getElementById('record-btn').addEventListener('click', () => {
             this.handleRecordButton();
