@@ -14,6 +14,7 @@ class Game {
         this.comboSystem = new ComboSystem();
         this.hintSystem = new HintSystem();
         this.taskTimer = new TaskTimer();
+        this.speechTimer = new SpeechTimer(); // Таймер активной речи
         this.audioVisualizer = new AudioVisualizer('audio-visualizer');
         this.levelStartTime = 0;
         this.fastestLevel = Infinity;
@@ -60,8 +61,12 @@ class Game {
             await this.speechRecognizer.startRecording();
             this.taskTimer.start();
 
-            // Запустить визуализатор
+            // Инициализировать и запустить таймер речи
             if (this.speechRecognizer.stream) {
+                await this.speechTimer.init(this.speechRecognizer.stream);
+                this.speechTimer.startMonitoring();
+
+                // Запустить визуализатор
                 await this.audioVisualizer.init(this.speechRecognizer.stream);
             }
 
@@ -85,7 +90,8 @@ class Game {
         this.audioVisualizer.stop();
 
         const taskTime = this.taskTimer.stop();
-        console.log('[Game.stopRecordingAndCheck] Время задания:', taskTime, 'мс');
+        const speechTime = this.speechTimer.stopMonitoring(); // Время активной речи
+        console.log('[Game.stopRecordingAndCheck] Общее время:', taskTime, 'мс, время речи:', speechTime, 'сек');
 
         try {
             console.log('[Game.stopRecordingAndCheck] Останавливаем запись');
@@ -115,11 +121,13 @@ class Game {
             let speedBonus = 0;
             let comboBonus = 0;
             let comboInfo = null;
+            let timeBonus = false;
 
             if (isSuccess) {
-                // Бонус за скорость (если быстрее 10 секунд)
-                if (taskTime < 10000) {
+                // Бонус за скорость речи (если уложился в целевое время)
+                if (currentTask.targetTime && speechTime <= currentTask.targetTime) {
                     speedBonus = 1;
+                    timeBonus = true;
                     stars = Math.min(3, stars + speedBonus);
                 }
 
@@ -145,7 +153,10 @@ class Game {
                 speedBonus: speedBonus,
                 comboBonus: comboBonus,
                 comboInfo: comboInfo,
-                taskTime: Math.floor(taskTime / 1000)
+                taskTime: Math.floor(taskTime / 1000),
+                speechTime: speechTime.toFixed(1), // Время активной речи
+                targetTime: currentTask.targetTime || null, // Целевое время
+                timeBonus: timeBonus
             };
 
             console.log('[Game.stopRecordingAndCheck] Результат:', result);

@@ -9,53 +9,53 @@ const COMBINED_TONGUE_TWISTERS = {
     difficulty: 'medium',
     tasks: [
         // Лёгкие скороговорки (разминка)
-        { type: 'tongue-twister', text: 'Шла Саша по шоссе и сосала сушку', emotion: null, targetAccuracy: 0.85 },
-        { type: 'tongue-twister', text: 'На дворе трава, на траве дрова', emotion: null, targetAccuracy: 0.85 },
-        { type: 'tongue-twister', text: 'Белый снег, белый мел, белый заяц тоже бел', emotion: null, targetAccuracy: 0.85 },
-        { type: 'tongue-twister', text: 'Мама мыла Милу мылом', emotion: null, targetAccuracy: 0.85 },
-        { type: 'tongue-twister', text: 'Четыре чёрненьких чумазых чертёнка', emotion: null, targetAccuracy: 0.85 },
-        { type: 'tongue-twister', text: 'Ткёт ткач ткани на платки Тане', emotion: null, targetAccuracy: 0.85 },
-        { type: 'tongue-twister', text: 'Купи кипу пик', emotion: null, targetAccuracy: 0.85 },
-        { type: 'tongue-twister', text: 'Водовоз вёз воду из водопровода', emotion: null, targetAccuracy: 0.85 },
+        { type: 'tongue-twister', text: 'Шла Саша по шоссе и сосала сушку', emotion: null, targetAccuracy: 0.85, targetTime: 3 },
+        { type: 'tongue-twister', text: 'На дворе трава, на траве дрова', emotion: null, targetAccuracy: 0.85, targetTime: 2.5 },
+        { type: 'tongue-twister', text: 'Белый снег, белый мел, белый заяц тоже бел', emotion: null, targetAccuracy: 0.85, targetTime: 3 },
+        { type: 'tongue-twister', text: 'Мама мыла Милу мылом', emotion: null, targetAccuracy: 0.85, targetTime: 2 },
+        { type: 'tongue-twister', text: 'Четыре чёрненьких чумазых чертёнка', emotion: null, targetAccuracy: 0.85, targetTime: 3 },
+        { type: 'tongue-twister', text: 'Ткёт ткач ткани на платки Тане', emotion: null, targetAccuracy: 0.85, targetTime: 2.5 },
+        { type: 'tongue-twister', text: 'Купи кипу пик', emotion: null, targetAccuracy: 0.85, targetTime: 1.5 },
+        { type: 'tongue-twister', text: 'Водовоз вёз воду из водопровода', emotion: null, targetAccuracy: 0.85, targetTime: 3 },
 
         // Простые сложные слова
-        { type: 'word', text: 'Достопримечательность', emotion: null, targetAccuracy: 0.85 },
-        { type: 'word', text: 'Фотоаппарат', emotion: null, targetAccuracy: 0.85 },
-        { type: 'word', text: 'Велосипедист', emotion: null, targetAccuracy: 0.85 },
-        { type: 'word', text: 'Электричество', emotion: null, targetAccuracy: 0.85 },
+        { type: 'word', text: 'Достопримечательность', emotion: null, targetAccuracy: 0.85, targetTime: 2 },
+        { type: 'word', text: 'Фотоаппарат', emotion: null, targetAccuracy: 0.85, targetTime: 1.5 },
+        { type: 'word', text: 'Велосипедист', emotion: null, targetAccuracy: 0.85, targetTime: 1.5 },
+        { type: 'word', text: 'Электричество', emotion: null, targetAccuracy: 0.85, targetTime: 1.5 },
 
         // Средние скороговорки
-        { type: 'tongue-twister', text: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет', emotion: null, targetAccuracy: 0.88 },
-        { type: 'tongue-twister', text: 'Ехал Грека через реку, видит Грека в реке рак', emotion: null, targetAccuracy: 0.88 },
-        { type: 'tongue-twister', text: 'От топота копыт пыль по полю летит', emotion: null, targetAccuracy: 0.88 },
-        { type: 'tongue-twister', text: 'Бык тупогуб, тупогубенький бычок', emotion: null, targetAccuracy: 0.88 },
-        { type: 'tongue-twister', text: 'Съел молодец тридцать три пирога с пирогом, да все с творогом', emotion: null, targetAccuracy: 0.88 },
-        { type: 'tongue-twister', text: 'Осип охрип, Архип осип', emotion: null, targetAccuracy: 0.88 },
+        { type: 'tongue-twister', text: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет', emotion: null, targetAccuracy: 0.88, targetTime: 4 },
+        { type: 'tongue-twister', text: 'Ехал Грека через реку, видит Грека в реке рак', emotion: null, targetAccuracy: 0.88, targetTime: 3.5 },
+        { type: 'tongue-twister', text: 'От топота копыт пыль по полю летит', emotion: null, targetAccuracy: 0.88, targetTime: 3 },
+        { type: 'tongue-twister', text: 'Бык тупогуб, тупогубенький бычок', emotion: null, targetAccuracy: 0.88, targetTime: 2.5 },
+        { type: 'tongue-twister', text: 'Съел молодец тридцать три пирога с пирогом, да все с творогом', emotion: null, targetAccuracy: 0.88, targetTime: 4 },
+        { type: 'tongue-twister', text: 'Осип охрип, Архип осип', emotion: null, targetAccuracy: 0.88, targetTime: 2 },
 
         // Средние сложные слова
-        { type: 'word', text: 'Субстанциональность', emotion: null, targetAccuracy: 0.88 },
-        { type: 'word', text: 'Высокопревосходительство', emotion: null, targetAccuracy: 0.88 },
-        { type: 'word', text: 'Переосвидетельствование', emotion: null, targetAccuracy: 0.88 },
-        { type: 'word', text: 'Делопроизводительность', emotion: null, targetAccuracy: 0.88 },
+        { type: 'word', text: 'Субстанциональность', emotion: null, targetAccuracy: 0.88, targetTime: 2 },
+        { type: 'word', text: 'Высокопревосходительство', emotion: null, targetAccuracy: 0.88, targetTime: 2.5 },
+        { type: 'word', text: 'Переосвидетельствование', emotion: null, targetAccuracy: 0.88, targetTime: 2.5 },
+        { type: 'word', text: 'Делопроизводительность', emotion: null, targetAccuracy: 0.88, targetTime: 2.5 },
 
         // Сложные скороговорки
-        { type: 'tongue-twister', text: 'Расскажите про покупки. Про какие про покупки? Про покупки, про покупки, про покупочки свои', emotion: null, targetAccuracy: 0.90 },
-        { type: 'tongue-twister', text: 'Корабли лавировали, лавировали, да не вылавировали', emotion: null, targetAccuracy: 0.90 },
-        { type: 'tongue-twister', text: 'Сшит колпак не по-колпаковски, вылит колокол не по-колоколовски', emotion: null, targetAccuracy: 0.90 },
-        { type: 'tongue-twister', text: 'Король орёл, орёл король', emotion: null, targetAccuracy: 0.90 },
-        { type: 'tongue-twister', text: 'Всех скороговорок не перескороговоришь, не перевыскороговоришь', emotion: null, targetAccuracy: 0.90 },
+        { type: 'tongue-twister', text: 'Расскажите про покупки. Про какие про покупки? Про покупки, про покупки, про покупочки свои', emotion: null, targetAccuracy: 0.90, targetTime: 5 },
+        { type: 'tongue-twister', text: 'Корабли лавировали, лавировали, да не вылавировали', emotion: null, targetAccuracy: 0.90, targetTime: 4 },
+        { type: 'tongue-twister', text: 'Сшит колпак не по-колпаковски, вылит колокол не по-колоколовски', emotion: null, targetAccuracy: 0.90, targetTime: 4.5 },
+        { type: 'tongue-twister', text: 'Король орёл, орёл король', emotion: null, targetAccuracy: 0.90, targetTime: 2 },
+        { type: 'tongue-twister', text: 'Всех скороговорок не перескороговоришь, не перевыскороговоришь', emotion: null, targetAccuracy: 0.90, targetTime: 4.5 },
 
         // Очень сложные слова
-        { type: 'word', text: 'Человеконенавистничество', emotion: null, targetAccuracy: 0.92 },
-        { type: 'word', text: 'Рентгеноэлектрокардиографический', emotion: null, targetAccuracy: 0.92 },
-        { type: 'word', text: 'Превысокомногорассмотрительствующий', emotion: null, targetAccuracy: 0.92 },
+        { type: 'word', text: 'Человеконенавистничество', emotion: null, targetAccuracy: 0.92, targetTime: 2.5 },
+        { type: 'word', text: 'Рентгеноэлектрокардиографический', emotion: null, targetAccuracy: 0.92, targetTime: 3 },
+        { type: 'word', text: 'Превысокомногорассмотрительствующий', emotion: null, targetAccuracy: 0.92, targetTime: 3 },
 
         // Экспертные скороговорки
-        { type: 'tongue-twister', text: 'Тридцать три корабля лавировали, лавировали, да не вылавировали', emotion: null, targetAccuracy: 0.93 },
-        { type: 'tongue-twister', text: 'Интервьюер интервента интервьюировал', emotion: null, targetAccuracy: 0.93 },
-        { type: 'tongue-twister', text: 'Дефибриллятор дефибриллировал дефибриллировал да не выдефибриллировал', emotion: null, targetAccuracy: 0.93 },
-        { type: 'tongue-twister', text: 'Пакет под попкорн, пакет под попкорн, пакет под попкорн', emotion: null, targetAccuracy: 0.93 },
-        { type: 'tongue-twister', text: 'Шестнадцать шли мышей и шесть нашли грошей', emotion: null, targetAccuracy: 0.93 }
+        { type: 'tongue-twister', text: 'Тридцать три корабля лавировали, лавировали, да не вылавировали', emotion: null, targetAccuracy: 0.93, targetTime: 5 },
+        { type: 'tongue-twister', text: 'Интервьюер интервента интервьюировал', emotion: null, targetAccuracy: 0.93, targetTime: 3 },
+        { type: 'tongue-twister', text: 'Дефибриллятор дефибриллировал дефибриллировал да не выдефибриллировал', emotion: null, targetAccuracy: 0.93, targetTime: 5 },
+        { type: 'tongue-twister', text: 'Пакет под попкорн, пакет под попкорн, пакет под попкорн', emotion: null, targetAccuracy: 0.93, targetTime: 3 },
+        { type: 'tongue-twister', text: 'Шестнадцать шли мышей и шесть нашли грошей', emotion: null, targetAccuracy: 0.93, targetTime: 3.5 }
     ]
 };
 

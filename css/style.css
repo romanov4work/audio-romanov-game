@@ -433,13 +433,27 @@
 }
 
 .task-text {
-    font-size: var(--font-size-2xl);
-    font-weight: 600;
-    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
     margin: 24px 0;
-    padding: 16px;
-    background: var(--bg-secondary);
+    padding: 20px;
+    background: #ffffff;
+    border: 3px solid var(--primary-color);
     border-radius: var(--radius-md);
+    line-height: 1.5;
+    text-align: center;
+}
+
+.task-target-time {
+    display: inline-block;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #FFD93D, #FFC107);
+    border-radius: var(--radius-full);
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 12px;
+    color: #1a1a1a;
 }
 
 .task-emotion {

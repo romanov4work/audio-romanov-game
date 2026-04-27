@@ -343,6 +343,9 @@ class App {
         taskTitle.textContent = title;
 
         let contentHTML = `<div class="task-text">${task.text}</div>`;
+        if (task.targetTime) {
+            contentHTML += `<div class="task-target-time">⏱️ Целевое время: ${task.targetTime} сек</div>`;
+        }
         if (task.emotion) {
             contentHTML += `<div class="task-emotion">Эмоция: ${task.emotion}</div>`;
         }
@@ -447,7 +450,16 @@ class App {
             resultMessage.className = 'result-message success';
             const stars = '⭐'.repeat(result.stars);
             resultMessage.innerHTML = `<span class="stars-animation">Отлично! ${stars}</span>`;
-            resultDetails.textContent = `Точность: ${Math.round(result.similarity * 100)}%`;
+
+            // Показать время произношения
+            let detailsText = `Точность: ${Math.round(result.similarity * 100)}%`;
+            if (result.targetTime && result.speechTime) {
+                detailsText += `<br>Время: ${result.speechTime}с / ${result.targetTime}с`;
+                if (result.timeBonus) {
+                    detailsText += ` ⚡`;
+                }
+            }
+            resultDetails.innerHTML = detailsText;
 
             // Показать подсказку при хорошем результате
             if (!this.tutorialSystem.isDemoMode() && this.game.currentTaskIndex === 0) {
@@ -477,7 +489,7 @@ class App {
 
             // Показать бонусы
             let bonusText = [];
-            if (result.speedBonus > 0) {
+            if (result.timeBonus) {
                 bonusText.push(`⚡ Бонус за скорость: +${result.speedBonus} звезда`);
             }
             if (result.comboInfo && result.comboInfo.combo > 1) {
