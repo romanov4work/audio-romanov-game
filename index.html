@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Обучающая игра для развития дикции и речевых навыков детей 6-11 лет">
+    <meta name="keywords" content="дикция, речь, скороговорки, обучение, дети, Учи.ру">
+    <meta name="author" content="Учи.ру">
     <title>Озвучиваем Мультики - Учи.ру</title>
     <link rel="stylesheet" href="css/ui-kit.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+    <style>
+        /* Критические стили для быстрой загрузки */
+        body { margin: 0; overflow: hidden; }
+        #app { width: 100vw; height: 100vh; }
+    </style>
 </head>
 <body>
     <!-- SVG иконки -->
@@ -36,7 +44,11 @@
             <div class="menu-container">
                 <h1 class="game-title">Озвучиваем Мультики</h1>
                 <div class="character-container">
-                    <div id="main-character" class="character"></div>
+                    <div id="main-character" class="character">
+                        <svg viewBox="0 0 100 100">
+                            <use href="#character-robot"></use>
+                        </svg>
+                    </div>
                 </div>
 
                 <div class="menu-buttons">
@@ -78,7 +90,11 @@
 
                 <!-- Игровая область -->
                 <div class="game-area">
-                    <div class="character-animation" id="game-character"></div>
+                    <div class="character-animation" id="game-character">
+                        <svg viewBox="0 0 100 100">
+                            <use href="#character-robot"></use>
+                        </svg>
+                    </div>
 
                     <div class="task-container">
                         <h3 id="task-title">Задание</h3>
@@ -118,7 +134,11 @@
         <div id="results-screen" class="screen">
             <div class="results-container">
                 <h2>Отличная работа!</h2>
-                <div class="results-character" id="results-character"></div>
+                <div class="results-character" id="results-character">
+                    <svg viewBox="0 0 100 100">
+                        <use href="#character-robot"></use>
+                    </svg>
+                </div>
 
                 <div class="results-stats">
                     <div class="stat-item">
@@ -173,6 +193,7 @@
         </div>
     </div>
 
+    <!-- Скрипты -->
     <script src="js/utils.js"></script>
     <script src="js/whisper-client.js"></script>
     <script src="js/content.js"></script>

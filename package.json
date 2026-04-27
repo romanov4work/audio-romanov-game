@@ -1,0 +1,13 @@
+{
+  "name": "uchi-voice-game",
+  "version": "1.0.0",
+  "description": "Обучающая игра для развития дикции детей 6-11 лет",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "whisper": "python whisper_server.py"
+  },
+  "keywords": ["education", "speech", "kids", "uchi.ru"],
+  "author": "Учи.ру",
+  "license": "MIT"
+}
