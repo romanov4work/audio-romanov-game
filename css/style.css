@@ -111,7 +111,7 @@
 }
 
 .game-title {
-    font-size: 56px;
+    font-size: 72px;
     color: #FFFFFF;
     margin-bottom: 60px;
     font-weight: 900;
@@ -119,33 +119,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-
-    /* Чёткая обводка */
     text-shadow:
-        /* Чёрная обводка */
-        -3px -3px 0 #000,
-        3px -3px 0 #000,
-        -3px 3px 0 #000,
-        3px 3px 0 #000,
-        -3px 0 0 #000,
-        3px 0 0 #000,
-        0 -3px 0 #000,
-        0 3px 0 #000,
-        /* Дополнительная обводка для толщины */
-        -4px -4px 0 #000,
-        4px -4px 0 #000,
-        -4px 4px 0 #000,
-        4px 4px 0 #000,
-        /* Облачная тень */
-        0 6px 12px rgba(0, 0, 0, 0.5),
-        0 8px 20px rgba(0, 0, 0, 0.3);
-
-    /* Убрать градиент и размытие */
-    background: none;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: #FFFFFF;
-    background-clip: unset;
-    filter: none;
+        -1px -1px 0 #FFF,
+        1px -1px 0 #FFF,
+        -1px 1px 0 #FFF,
+        1px 1px 0 #FFF,
+        0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .character-container {
