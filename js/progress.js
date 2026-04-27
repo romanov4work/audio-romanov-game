@@ -36,13 +36,13 @@ class ProgressSystem {
 
     // XP для следующего уровня
     getXPForNextLevel() {
-        return this.progress.playerLevel * 100;
+        return this.progress.playerLevel * 50; // Уменьшено с 100 до 50
     }
 
     // Прогресс до следующего уровня (0-1)
     getLevelProgress() {
-        const currentLevelXP = (this.progress.playerLevel - 1) * 100;
-        const nextLevelXP = this.progress.playerLevel * 100;
+        const currentLevelXP = (this.progress.playerLevel - 1) * 50; // Уменьшено с 100 до 50
+        const nextLevelXP = this.progress.playerLevel * 50; // Уменьшено с 100 до 50
         const xpInCurrentLevel = this.progress.totalXP - currentLevelXP;
         const xpNeeded = nextLevelXP - currentLevelXP;
         return Math.min(xpInCurrentLevel / xpNeeded, 1);
@@ -155,16 +155,16 @@ class ProgressSystem {
     calculateXP(stars, accuracy, tasksCompleted) {
         let xp = 0;
 
-        // Базовый XP за звёзды
-        xp += stars * 10;
+        // Базовый XP за звёзды (увеличено)
+        xp += stars * 15; // Было 10, стало 15
 
-        // Бонус за точность
-        if (accuracy >= 95) xp += 20;
-        else if (accuracy >= 85) xp += 10;
-        else if (accuracy >= 75) xp += 5;
+        // Бонус за точность (увеличено)
+        if (accuracy >= 95) xp += 30; // Было 20, стало 30
+        else if (accuracy >= 85) xp += 20; // Было 10, стало 20
+        else if (accuracy >= 75) xp += 10; // Было 5, стало 10
 
-        // Бонус за завершённые задания
-        xp += tasksCompleted * 5;
+        // Бонус за завершённые задания (увеличено)
+        xp += tasksCompleted * 8; // Было 5, стало 8
 
         return xp;
     }

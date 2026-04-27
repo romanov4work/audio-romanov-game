@@ -111,20 +111,21 @@
 }
 
 .game-title {
-    font-size: 72px;
+    font-size: 42px;
     color: #FFFFFF;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
+    margin-top: -30px;
     font-weight: 900;
     letter-spacing: 3px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     text-shadow:
-        -1px -1px 0 #FFF,
-        1px -1px 0 #FFF,
-        -1px 1px 0 #FFF,
-        1px 1px 0 #FFF,
-        0 2px 8px rgba(0, 0, 0, 0.3);
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000,
+        0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .character-container {
